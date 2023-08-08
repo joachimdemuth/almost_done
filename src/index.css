@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.cdnfonts.com/css/tasa-orbiter-display');
+
+
+/* font-family: 'TASA Orbiter Display', sans-serif; */
+/* font-family: 'TASA Orbiter Deck', sans-serif; */
+/* font-family: 'TASA Orbiter Text', sans-serif; */
+
+body {
+  display: flex;
+  margin: 0;
+  font-family: 'TASA Orbiter Text', sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+#root {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
