@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { createClient } from '@supabase/supabase-js';
-import image from '../.././assets/bg_image/italy-35.jpg'
+
 import { Link } from 'react-router-dom';
 // const supabaseUrl = 'https://asjnslnbgpdangbjchiu.supabase.co';
 // const supabaseKey =
