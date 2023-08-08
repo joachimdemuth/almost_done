@@ -3,9 +3,6 @@ import { createClient } from '@supabase/supabase-js';
 import InputField from '../../components/InputField';
 import TextArea from '../../components/TextArea';
 import ComboBox from '../../components/ComboBox';
-// const supabaseUrl = 'https://asjnslnbgpdangbjchiu.supabase.co';
-// const supabaseKey =
-// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzam5zbG5iZ3BkYW5nYmpjaGl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE0MTU3MTMsImV4cCI6MjAwNjk5MTcxM30.e5rwQT1rrSFy0MHAetAaJCBPfp70VJ29L-XPS_1CJqs';
 const supabase = createClient(process.env.REACT_APP_SUPABASE_URL, process.env.REACT_APP_SUPABASE_ANON_KEY);
 
 function Upload() {

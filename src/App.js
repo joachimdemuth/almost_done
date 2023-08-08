@@ -47,7 +47,7 @@ window.addEventListener('resize', () => {
     <div className="z-10 flex fixed w-full justify-center items-center bottom-12">
 
     <Link to="/gallery">
-    <div className='flex justify-center items-center align-middle bg-slate-100  font-bold border-[#0057FF] w-[150px] h-[150px] px-4 py-4 text-lg text-[#0057FF] rounded-full'>Go to gallery</div>
+    <div className='flex justify-center items-center align-middle bg-slate-100  font-bold border-[#0057FF] w-[80px] h-[80px] px-4 py-4 text-lg text-[#0057FF] rounded-full'>Go to gallery</div>
     </Link>
     </div>
     </div>
