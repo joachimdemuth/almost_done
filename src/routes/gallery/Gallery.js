@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { createClient } from '@supabase/supabase-js';
-
+import Masonry from 'masonry-layout';
 import { Link } from 'react-router-dom';
 const supabase = createClient(process.env.REACT_APP_SUPABASE_URL, process.env.REACT_APP_SUPABASE_ANON_KEY);
 const baseUrl = process.env.REACT_APP_SUPABASE_BASE_URL
@@ -56,6 +56,13 @@ const handlePrevious = () => {
     }
 }
 
+var grid = document.querySelector('#grid');
+var msnry = new Masonry( grid, {
+  // options...
+  itemSelector: '#grid-item',
+  fitWidth: true,
+});
+
 
 
   return (
@@ -74,16 +81,17 @@ const handlePrevious = () => {
 </Link>
         </div>
 
-    <div className='lg:w-3/5 flex-1 pt-4 flex flex-col lg:px-20 justify-between items-center lg:py-10'>
-    <div className='flex flex-col'>
+    <div id="grid" className='lg:w-full box-border  flex-wrap flex-1 pt-4 flex flex-col lg:px-20 justify-between items-start lg:py-10'>
         {
             allImages.map((image, index) => {
-
+                
                 return(
+                    <div id="grid-item" className=' lg:w-full lg:max-w-[450px] h-auto flex flex-1 max-w-full object-contain'>
 
-                    <img key={index} className="cover px-8 mb-4" src={baseUrl + image?.file_path} />
+                    <img key={index} className="cover lg:hover:scale-110 lg:cursor-pointer lg:transition-all " src={baseUrl + image?.file_path} />
+        </div>
                 )
-            })
+            }) 
         }
 
 
@@ -97,7 +105,6 @@ const handlePrevious = () => {
                 <p className=' text-[#0057FF] underline'>Show on map</p>
             </div>
         </div> */}
-    </div>
 
     {/* <div className='flex flex-row lg:w-3/4 lg:px-20 lg:h-24 justify-between items-center'>
         <div className='flex w-full justify-between flex-row gap-4'>
