@@ -55,6 +55,9 @@ const handlePrevious = () => {
         setCurrentImageIndex(prevIndex => prevIndex - 1)
     }
 }
+// check if #grid exists
+if(document.getElementById('grid')) {
+    // if it does, initialize masonry
 
 var msnry = new Masonry( '#grid', {
     // options
@@ -62,7 +65,7 @@ var msnry = new Masonry( '#grid', {
     fitWidth: true,
 
     });
-
+}
 
   return (
     <div className='flex flex-col justify-start w-full items-center min-h-screen'>
@@ -86,8 +89,9 @@ var msnry = new Masonry( '#grid', {
                 
                 return(
                     
-                    <div id="grid-item" className='flex-1 lg:max-w-[450px] hover:scale-105 transition-transform hover:cursor-pointer'>
-                    <img key={index} className="cover p-1 transition-opacity" src={baseUrl + image?.file_path} />
+                    <div key={index} id="grid-item" className='flex-1 lg:max-w-[450px] hover:scale-105 transition-transform hover:cursor-pointer'>
+                    <img  className="cover p-1 transition-opacity" src={baseUrl + image?.file_path} />
+                    <p>{image.coords.lng + ", " + image.coords.lat}</p>
                       </div>
                 )
             })
