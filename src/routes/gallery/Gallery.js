@@ -56,13 +56,12 @@ const handlePrevious = () => {
     }
 }
 
-var grid = document.querySelector('#grid');
-var msnry = new Masonry( grid, {
-  // options...
-  itemSelector: '#grid-item',
-  fitWidth: true,
-});
+var msnry = new Masonry( '#grid', {
+    // options
+    itemSelector: '#grid-item',
+    fitWidth: true,
 
+    });
 
 
   return (
@@ -81,17 +80,17 @@ var msnry = new Masonry( grid, {
 </Link>
         </div>
 
-    <div id="grid" className='lg:w-full box-border  flex-wrap flex-1 pt-4 flex flex-col lg:px-20 justify-between items-start lg:py-10'>
+    <div id="grid" className='lg:w-full pt-4 flex flex-wrap lg:px-20 justify-between items-center lg:py-10'>
         {
             allImages.map((image, index) => {
                 
                 return(
-                    <div id="grid-item" className=' lg:w-full lg:max-w-[450px] h-auto flex flex-1 max-w-full object-contain'>
-
-                    <img key={index} className="cover lg:hover:scale-110 lg:cursor-pointer lg:transition-all " src={baseUrl + image?.file_path} />
-        </div>
+                    
+                    <div id="grid-item" className='flex-1 lg:max-w-[450px] hover:scale-105 transition-transform hover:cursor-pointer'>
+                    <img key={index} className="cover p-1 transition-opacity" src={baseUrl + image?.file_path} />
+                      </div>
                 )
-            }) 
+            })
         }
 
 
