@@ -13,7 +13,7 @@ body {
   display: flex;
   margin: 0;
   font-family: 'TASA Orbiter Text', sans-serif;
-
+  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-width: 100vw;
