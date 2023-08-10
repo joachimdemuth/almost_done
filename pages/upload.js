@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import InputField from '../../components/InputField';
-import TextArea from '../../components/TextArea';
-import ComboBox from '../../components/ComboBox';
-import { Link } from 'react-router-dom';
-import LocationPicker from './LocationPicker';
-
+import InputField from '../components/InputField';
+import TextArea from '../components/TextArea';
+import ComboBox from '../components/ComboBox';
+import LocationPicker from '../components/LocationPicker';
+import LeftArrow from '../public/assets/icons/Arrow_left.svg';
+import Image from 'next/image';
+import Link from 'next/link';
 const supabase = createClient(
-	process.env.REACT_APP_SUPABASE_URL,
-	process.env.REACT_APP_SUPABASE_ANON_KEY,
+	process.env.NEXT_PUBLIC_SUPABASE_URL,
+	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
 );
 
 var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
@@ -137,8 +138,19 @@ function Upload() {
 	// };
 	return (
 		<>
-		<div className=' flex w-full min-h-screen flex-col items-center gap-6 py-20'>
+		<div className=' flex w-full min-h-screen flex-col items-center gap-20 py-20'>
+            <div className='flex w-full flex-row px-20'>
+            <div className='flex w-1/3'>
+            <Link href='/gallery'>
+                <Image src={LeftArrow} alt='back' />
+            </Link>
+            </div>
+            <div className='flex w-1/3 justify-center'>
 			<h1 className=' text-4xl font-display font-bold '>Upload image</h1>
+
+            </div>
+            <div className='flex w-1/3'></div>
+            </div>
 
 			<form
 				className='flex w-1/2 gap-6 flex-col'

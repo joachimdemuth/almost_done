@@ -1,18 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    fontFamily: {
-      'body': [
-        'TASA Orbiter Text',
-        'sans-serif'
-      ],
-      'display': [
-        'TASA Orbiter Display',
-        'sans-serif'
-      ],
+    theme: {
+      fontFamily: {
+        'body': [
+          'TASA Orbiter Text',
+          'sans-serif'
+        ],
+        'display': [
+          'TASA Orbiter Display',
+          'sans-serif'
+        ],
+      },
     },
   },
   plugins: [],

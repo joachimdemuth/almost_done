@@ -1,23 +1,27 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import Masonry from 'masonry-layout';
-import { Link } from 'react-router-dom';
-import ArrowLeft from '../../assets/icons/Arrow_left.svg';
-import ArrowRight from '../../assets/icons/Arrow_right.svg';
-import Close from '../../assets/icons/Close.svg';
+import Masonry from 'react-masonry-css';
+import Image from 'next/image';
+
+import Link from 'next/link';
+import ArrowLeft from '../public/assets/icons/Arrow_left.svg';
+import ArrowRight from '../public/assets/icons/Arrow_right.svg';
+import Close from '../public/assets/icons/Close.svg';
+
 const supabase = createClient(
-	process.env.REACT_APP_SUPABASE_URL,
-	process.env.REACT_APP_SUPABASE_ANON_KEY,
+	process.env.NEXT_PUBLIC_SUPABASE_URL,
+	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
 );
-const baseUrl = process.env.REACT_APP_SUPABASE_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_BASE_URL;
 var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 const mapboxToken =
 	'pk.eyJ1IjoiZGpoZXN0IiwiYSI6ImNsbDNpM2xyNTA0a3MzZW1jOXBxb3g2amkifQ.qz9ZHVYASWPzJ0uiwwHDOg';
 
-function Gallery() {
+export default function Gallery() {
 	const [allImages, setAllImages] = useState([]);
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
-	const [currentImage, setCurrentImage] = useState('');
 	const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 	const [isMapShowing, setIsMapShowing] = useState(false);
 	const [currentCoords, setCurrentCoords] = useState({});
@@ -25,6 +29,7 @@ function Gallery() {
 	const bottomBarRef = useRef(null);
 	const mapContainer = useRef(null);
 	const mapRef = useRef(null);
+	const gridRef = useRef(null);
 	let marker; // Store the current marker if one exists
 
 	useEffect(() => {
@@ -179,21 +184,10 @@ function Gallery() {
 		}
 	};
 
-	// check if #grid exists
-	if (document.getElementById('grid')) {
-		// if it does, initialize masonry
-
-		var msnry = new Masonry('#grid', {
-			// options
-			itemSelector: '#grid-item',
-			fitWidth: true,
-		});
-	}
-
 	return (
 		<div className='flex flex-col justify-start w-full items-center min-h-screen'>
 			<div className=' bg-white flex w-full px-6 h-16 lg:px-20 lg:h-24 lg:justify-start justify-center items-center'>
-				<Link to='/'>
+				<Link href='/'>
 					<svg
 						className=' w-10 lg:w-16 h-auto lg:h-auto'
 						viewBox='0 0 770 386'
@@ -227,20 +221,23 @@ function Gallery() {
 					</svg>
 				</Link>
 			</div>
+<div className='lg:w-full pt-4 flex flex-wrap lg:px-20 justify-between items-center lg:py-10'>
 
-			<div
-				id='grid'
-				className='lg:w-full pt-4 flex flex-wrap lg:px-20 justify-between items-center lg:py-10'
+			<Masonry
+			breakpointCols={3}
+			ref={gridRef}
+			id='grid'
+			className='flex w-full lg:px-20 justify-between items-center lg:py-10'
 			>
 				{allImages.map((image, index) => {
 					return (
 						<div
-							onClick={() => handleOpenLightbox(index)}
-							key={index}
-							id='grid-item'
-							className='flex-1 lg:max-w-[450px] hover:cursor-pointer'
+						onClick={() => handleOpenLightbox(index)}
+						key={index}
+						id='grid-item'
+						className='flex-1 lg:max-w-[450px] lg:h-auto hover:cursor-pointer'
 						>
-							<img className='cover p-1' src={baseUrl + image?.file_path} />
+							<Image width={450} height={450} className='object-contain p-1' src={baseUrl + image?.file_path} />
 							{/* <p>{image.coords.lng + ", " + image.coords.lat}</p> */}
 							{/* <p className=' text-[#0057ff]'>Show on map</p> */}
 						</div>
@@ -249,34 +246,36 @@ function Gallery() {
 
 				{/* <div className='flex justify-between flex-row w-full'>
             <div className='flex flex-col gap-4'>
-                <p className='font-bold'>{allImages[currentImageIndex]?.title}</p>
-                <p>{allImages[currentImageIndex]?.desc}</p>
+			<p className='font-bold'>{allImages[currentImageIndex]?.title}</p>
+			<p>{allImages[currentImageIndex]?.desc}</p>
             </div>
             <div className='flex flex-col gap-4'>
-                <p>{allImages[currentImageIndex]?.coords}</p>
-                <p className=' text-[#0057FF] underline'>Show on map</p>
+			<p>{allImages[currentImageIndex]?.coords}</p>
+			<p className=' text-[#0057FF] underline'>Show on map</p>
             </div>
         </div> */}
 
 				{/* <div className='flex flex-row lg:w-3/4 lg:px-20 lg:h-24 justify-between items-center'>
         <div className='flex w-full justify-between flex-row gap-4'>
-            <button onClick={handlePrevious} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Previous</button>
-            <p>{currentImageIndex+1}/{allImages.length}</p>
-            <button onClick={handleNext} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Next</button>
-
+		<button onClick={handlePrevious} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Previous</button>
+		<p>{currentImageIndex+1}/{allImages.length}</p>
+		<button onClick={handleNext} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Next</button>
+		
         </div>
     </div> */}
-			</div>
+			</Masonry>
+	</div>
 			{isLightboxOpen && (
 				<div className='fixed  justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
 					<div className='flex'>
-						<div className='lg:w-[64px] lg:h-[64px] w-[24px] h-[24px] rounded-full fixed lg:top-12 lg:right-12 top-6 right-6 flex justify-center items-center cursor-pointer scale-75 hover:scale-100 transition-transform'>
-							<img onClick={handleCloseLightbox} src={Close} />
+						<div className=' z-10 lg:w-[64px] lg:h-[64px] w-[24px] h-[24px] rounded-full fixed lg:top-12 lg:right-12 top-6 right-6 flex justify-center items-center cursor-pointer scale-75 hover:scale-100 transition-transform'>
+							<Image onClick={handleCloseLightbox} src={Close} />
 						</div>
 						{/* FULL SIZE IMAGE */}
 						<div className='flex justify-start items-start lg:h-[90%] h-auto w-full'>
-							<img
-								className='object-contain'
+							<Image
+									layout='fill'
+								className='object-cover'
 								src={baseUrl + allImages[currentImageIndex]?.file_path}
 							/>
 						</div>
@@ -295,7 +294,7 @@ function Gallery() {
 									<p className=' text-xl font-display font-bold'>
 										{allImages[currentImageIndex].title}
 									</p>
-									<p className=' text-md text-center font-body'>
+									<p className=' text-md font-body'>
 										{allImages[currentImageIndex].desc}
 									</p>
 								</div>
@@ -311,7 +310,7 @@ function Gallery() {
 									onClick={handlePrevious}
 									className='py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
 								>
-									<img src={ArrowLeft} />
+									<Image src={ArrowLeft} />
 								</div>
 								<p>
 									{currentImageIndex + 1}/{allImages.length}
@@ -321,7 +320,7 @@ function Gallery() {
 									onClick={handleNext}
 									className=' py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
 								>
-									<img src={ArrowRight} />
+									<Image src={ArrowRight} />
 								</div>
 							</div>
 							<div className='flex justify-center items-end gap-2 w-1/3 flex-col'>
@@ -354,5 +353,3 @@ function Gallery() {
 		</div>
 	);
 }
-
-export default Gallery;
