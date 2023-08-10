@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Masonry from 'masonry-layout';
 import { Link } from 'react-router-dom';
-import ArrowLeft from '../../assets/icons/Arrow_left.svg'
+import ArrowLeft from '../../assets/icons/Arrow_left.svg';
 import ArrowRight from '../../assets/icons/Arrow_right.svg';
 import Close from '../../assets/icons/Close.svg';
 const supabase = createClient(
@@ -10,13 +10,23 @@ const supabase = createClient(
 	process.env.REACT_APP_SUPABASE_ANON_KEY,
 );
 const baseUrl = process.env.REACT_APP_SUPABASE_BASE_URL;
-
+var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+const mapboxToken =
+	'pk.eyJ1IjoiZGpoZXN0IiwiYSI6ImNsbDNpM2xyNTA0a3MzZW1jOXBxb3g2amkifQ.qz9ZHVYASWPzJ0uiwwHDOg';
 
 function Gallery() {
 	const [allImages, setAllImages] = useState([]);
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [currentImage, setCurrentImage] = useState('');
 	const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+	const [isMapShowing, setIsMapShowing] = useState(false);
+	const [currentCoords, setCurrentCoords] = useState({});
+
+	const bottomBarRef = useRef(null);
+	const mapContainer = useRef(null);
+	const mapRef = useRef(null);
+	let marker; // Store the current marker if one exists
+
 	useEffect(() => {
 		async function getImages() {
 			const { data, error } = await supabase
@@ -31,7 +41,10 @@ function Gallery() {
 		getImages();
 	}, []);
 
-	const handleOpenLightbox = () => {
+	const handleOpenLightbox = (id) => {
+		setCurrentImageIndex(id);
+		setCurrentCoords(allImages[id].coords);
+		console.log(allImages[id].coords);
 		document.body.classList.add('overflow-hidden', 'fixed', 'w-full', 'h-full');
 		setIsLightboxOpen(true);
 	};
@@ -43,30 +56,129 @@ function Gallery() {
 			'w-full',
 			'h-full',
 		);
+		setIsMapShowing(false);
 		setIsLightboxOpen(false);
 	};
-	// async function fetchImage(url) {
-	//     console.log(url)
-	//     if (!url) return
-	//     const { data: publicURL, error } = await supabase.storage
-	//         .from('public-images')
-	//         .getPublicUrl(`analog/${url}`)
-	//     if (error) console.log('error', error)
-	//         console.log(publicURL)
-	//         setCurrentImage(publicURL.publicUrl)
-	// }
+
+	const toggleMap = () => {
+		if (isMapShowing) {
+			setIsMapShowing(false);
+		}
+
+		if (!isMapShowing) {
+			setIsMapShowing(true);
+			iniateMap();
+		}
+	};
+
+	const iniateMap = () => {
+		mapboxgl.accessToken = mapboxToken || '';
+		mapRef.current = new mapboxgl.Map({
+			container: 'map', // container ID
+			// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+			style: 'mapbox://styles/mapbox/streets-v12', // style URL
+			center: currentCoords, // starting position
+			zoom: 9, // starting zoom
+		});
+
+		setInitialMarker();
+	};
+
+	const setInitialMarker = () => {
+		if (marker) {
+			marker.remove();
+		}
+
+		marker = new mapboxgl.Marker()
+			.setLngLat(allImages[currentImageIndex].coords)
+			.addTo(mapRef.current);
+	};
+
+	const moveMarkerTo = () => {
+		if (!marker) {
+			console.error('Marker has not yet been set');
+			return;
+		}
+
+		marker.setLngLat(allImages[currentImageIndex].coords);
+	};
 
 	const handleNext = () => {
 		if (currentImageIndex < allImages.length - 1) {
 			setCurrentImageIndex((prevIndex) => prevIndex + 1);
+
+			if (isMapShowing) {
+				moveMarkerTo();
+
+				mapRef.current.flyTo({
+					center: allImages[currentImageIndex].coords,
+					zoom: 14,
+					speed: 2,
+					curve: 1,
+					easing(t) {
+						return t;
+					},
+				});
+			}
+		}
+
+		if (currentImageIndex === allImages.length - 1) {
+			setCurrentImageIndex(0);
+
+			if (isMapShowing) {
+				moveMarkerTo();
+
+				mapRef.current.flyTo({
+					center: allImages[currentImageIndex].coords,
+					zoom: 14,
+					speed: 2,
+					curve: 1,
+					easing(t) {
+						return t;
+					},
+				});
+			}
 		}
 	};
 
 	const handlePrevious = () => {
 		if (currentImageIndex > 0) {
 			setCurrentImageIndex((prevIndex) => prevIndex - 1);
+
+			if (isMapShowing && mapRef.current) {
+				moveMarkerTo();
+
+				mapRef.current.flyTo({
+					center: allImages[currentImageIndex].coords,
+					zoom: 14,
+					speed: 2,
+					curve: 1,
+					easing(t) {
+						return t;
+					},
+				});
+			}
+		}
+
+		if (currentImageIndex === 0) {
+			setCurrentImageIndex(allImages.length - 1);
+
+			if (isMapShowing && mapRef.current) {
+				moveMarkerTo();
+
+				mapRef.current.flyTo({
+					center: allImages[currentImageIndex].coords,
+					zoom: 14,
+					speed: 2,
+					curve: 1,
+					easing(t) {
+						return t;
+					},
+				});
+			}
 		}
 	};
+
 	// check if #grid exists
 	if (document.getElementById('grid')) {
 		// if it does, initialize masonry
@@ -123,7 +235,7 @@ function Gallery() {
 				{allImages.map((image, index) => {
 					return (
 						<div
-							onClick={handleOpenLightbox}
+							onClick={() => handleOpenLightbox(index)}
 							key={index}
 							id='grid-item'
 							className='flex-1 lg:max-w-[450px] hover:cursor-pointer'
@@ -156,62 +268,86 @@ function Gallery() {
     </div> */}
 			</div>
 			{isLightboxOpen && (
-				<div className='fixed flex-col top-0 left-0 w-full h-full bg-white flex'>
-                    <div className='w-[64px] h-[64px] rounded-full fixed top-12 right-12 flex justify-center items-center cursor-pointer scale-75 hover:scale-100 transition-transform'>
-                        <img onClick={handleCloseLightbox} src={Close} />
-                    </div>
-					{/* FULL SIZE IMAGE */}
-					<div className='flex h-[90%] w-full'>
-						<img
-							className='w-full h-full object-cover'
-							src={baseUrl + allImages[currentImageIndex]?.file_path}
-						/>
+				<div className='fixed  justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
+					<div className='flex'>
+						<div className='lg:w-[64px] lg:h-[64px] w-[24px] h-[24px] rounded-full fixed lg:top-12 lg:right-12 top-6 right-6 flex justify-center items-center cursor-pointer scale-75 hover:scale-100 transition-transform'>
+							<img onClick={handleCloseLightbox} src={Close} />
+						</div>
+						{/* FULL SIZE IMAGE */}
+						<div className='flex justify-start items-start lg:h-[90%] h-auto w-full'>
+							<img
+								className='object-contain'
+								src={baseUrl + allImages[currentImageIndex]?.file_path}
+							/>
+						</div>
 					</div>
 
 					{/* BOTTOM BAR */}
-					<div className='flex text-[#0057ff] justify-between px-12 py-6 bg-white flex-row  w-full h-full'>
-						<div className='flex justify-start items-start w-1/3 gap-1 flex-col'>
-							<p className=' text-xl font-display font-bold'>
-								{allImages[currentImageIndex].title}
-							</p>
-							<p className=' text-md text-center font-body'>
-								{allImages[currentImageIndex].desc}
-							</p>
-						</div>
-						<div className='flex flex-row justify-between items-center w-1/3   '>
-							<div
-								onClick={handlePrevious}
-								className='py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
-							>
-								<img src={ArrowLeft} />
+					<div
+						ref={bottomBarRef}
+						className={`flex text-[#0057ff] justify-between lg:px-12 lg:py-6 px-4 py-4 gap-2  bg-white flex-col  w-full  lg:h-${
+							isMapShowing ? '1/2' : '[10%]'
+						} transition-transform overflow-hidden lg:absolute lg:bottom-0 `}
+					>
+						<div className='flex lg:flex-row flex-col w-full'>
+							<div className='flex justify-start items-start lg:w-1/3 gap-4 w-full flex-col lg:flex-row'>
+								<div className='flex justify-start items-start w-full gap-1 flex-col'>
+									<p className=' text-xl font-display font-bold'>
+										{allImages[currentImageIndex].title}
+									</p>
+									<p className=' text-md text-center font-body'>
+										{allImages[currentImageIndex].desc}
+									</p>
+								</div>
+								<div className='flex justify-start items-start w-full gap-1 flex-col'>
+									<p className=' text-xl font-display font-bold'>Shot on</p>
+									<p className=' text-md text-center font-body'>
+										{allImages[currentImageIndex].camera}
+									</p>
+								</div>
 							</div>
-							<p>
-								{currentImageIndex + 1}/{allImages.length}
-							</p>
+							<div className='lg:flex lg:visible hidden flex-row justify-between items-center w-1/3   '>
+								<div
+									onClick={handlePrevious}
+									className='py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
+								>
+									<img src={ArrowLeft} />
+								</div>
+								<p>
+									{currentImageIndex + 1}/{allImages.length}
+								</p>
 
-							<div
-								onClick={handleNext}
-								className=' py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
-							>
-								<img src={ArrowRight} />
-
+								<div
+									onClick={handleNext}
+									className=' py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
+								>
+									<img src={ArrowRight} />
+								</div>
 							</div>
-						</div>
-						<div className='flex justify-center items-end gap-2 w-1/3 flex-col'>
-
+							<div className='flex justify-center items-end gap-2 w-1/3 flex-col'>
 								<p className=' text-sm font-body'>
 									{allImages[currentImageIndex].coords.lng +
 										', ' +
 										allImages[currentImageIndex].coords.lat}
 								</p>
-								<p className=' hover:font-bold text-xs underline text-blue-500 text-center hover:cursor-pointer font-display hover:underline'>
-									Show on map
+								<p
+									onClick={toggleMap}
+									className=' hover:font-bold text-xs underline text-blue-500 text-center hover:cursor-pointer font-display hover:underline'
+								>
+									{isMapShowing ? 'Close map' : 'Show on map'}
 								</p>
-
+							</div>
 						</div>
+						{/* MAP */}
 
-						
-                        
+						<div
+							ref={mapContainer}
+							className={`flex w-full h-full bg-white ${
+								isMapShowing ? 'visible' : 'hidden'
+							}`}
+						>
+							<div id='map' className=' w-full h-full rounded-xl'></div>
+						</div>
 					</div>
 				</div>
 			)}

@@ -13,7 +13,7 @@ const LocationPicker = () => {
 			center: [-74.5, 40], // starting position
 			zoom: 9, // starting zoom
 		});
-        console.log(map)
+
 	}, []);
 	return (
 		<div className='flex justify-center items-center fixed top-0 left-0 bg-black bg-opacity-70 w-full min-h-screen'>
