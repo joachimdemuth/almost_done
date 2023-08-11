@@ -271,7 +271,7 @@ export default function MainHall() {
 				<div className='fixed  justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
 					<div className='flex'>
 						<div className=' z-10 lg:w-[64px] lg:h-[64px] w-[24px] h-[24px] rounded-full fixed lg:top-12 lg:right-12 top-6 right-6 flex justify-center items-center cursor-pointer scale-75 hover:scale-100 transition-transform'>
-							<Image onClick={handleCloseLightbox} src={Close} />
+							<Image onClick={handleCloseLightbox} alt="Close" src={Close} />
 						</div>
 						{/* FULL SIZE IMAGE */}
 						<div className='flex relative bg-black justify-center items-start lg:h-[90%] h-auto w-full'>
@@ -315,7 +315,7 @@ export default function MainHall() {
 									onClick={handlePrevious}
 									className='py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
 								>
-									<Image src={ArrowLeft} />
+									<Image alt="Previous" src={ArrowLeft} />
 								</div>
 								<p>
 									{currentImageIndex + 1}/{allImages.length}
@@ -325,7 +325,7 @@ export default function MainHall() {
 									onClick={handleNext}
 									className=' py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
 								>
-									<Image src={ArrowRight} />
+									<Image alt="Next" src={ArrowRight} />
 								</div>
 							</div>
 							<div className='flex justify-center items-end gap-2 w-1/3 flex-col'>

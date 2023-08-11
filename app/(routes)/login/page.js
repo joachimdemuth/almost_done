@@ -2,7 +2,7 @@
 'use client'
 import React, {useState, useEffect} from 'react';
 import { supabase } from '../../_utils/supabase';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -28,7 +28,7 @@ if(data.user.role === "authenticated") {
 }
 checkAuth();
 
-}, [])
+}, [router])
 
 const handleSubmit = async (e) => {
     

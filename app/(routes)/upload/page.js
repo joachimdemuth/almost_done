@@ -21,7 +21,7 @@ const mapboxToken =
 
 
 
-function Upload({ user }) {
+export default function Upload() {
 	const [formData, setFormData] = useState({
 		title: '',
 		desc: '',
@@ -30,13 +30,16 @@ function Upload({ user }) {
 		date: '',
 		keywords: [],
 	});
-
-	
 	const [previewURL, setPreviewURL] = useState(null);
 	const [file, setFile] = useState(null);
 	const [uploading, setUploading] = useState(false);
 	const [open, setOpen] = useState(false);
+
+
 	const containerRef = React.useRef(null);
+	
+
+
 	let currentMarker; // Store the current marker if one exists
 	const router = useRouter();
 
@@ -49,15 +52,9 @@ function Upload({ user }) {
 		}
 		)
 
-	}, [])
+	}, [router])
 	
-	const handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-		  return;
-		}
 	
-		setOpen(false);
-	  };
 
 	useEffect(() => {
 		mapboxgl.accessToken = mapboxToken || '';
@@ -86,6 +83,14 @@ function Upload({ user }) {
 			map.remove();
 		};
 	}, []);
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+		  return;
+		}
+	
+		setOpen(false);
+	  };
 
 	const onFileChange = (event) => {
 		if (!event.target.files[0]) return;
@@ -296,5 +301,3 @@ function Upload({ user }) {
 		</>
 	);
 }
-
-export default Upload;
