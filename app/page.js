@@ -1,15 +1,16 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+'use client'
+import React, {useState, useEffect} from 'react';
 import Image from 'next/image'
-import bgHoriz from '../public/assets/bg_image/italy-35.webp'
-import bgVert from '../public/assets/bg_image/italy-24.webp'
-import logo from '../public/assets/Logo_2.svg'
+import bgHoriz from './_assets/bg_image/italy-35.webp'
+import bgVert from './_assets/bg_image/italy-24.webp'
+import logo from './_assets/Logo_2.svg'
 import Link from 'next/link';
 import '../styles/globals.css'
 
+
+
 export default function Home() {
   const [device, setDevice] = useState('')
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,14 +34,11 @@ const checkDevice = () => {
 }
 
 
-
-
-
   return (
     <div className="flex flex-col w-full min-h-screen justify-center items-center">
 
     <div className="w-full min-h-screen fixed top-0 left-0 ">
-      <Image src={device === "horizontal" ? bgVert : bgHoriz } alt="bg" className="w-full min-h-screen object-cover" />
+      <Image src={device === "horizontal" ? bgHoriz : bgVert } alt="bg" className="w-full min-h-screen object-cover" />
     </div>
     <div className='flex min-w-full min-h-screen justify-center items-center z-10'>
     <svg  className=' w-72 h-auto lg:w-[770px] lg:h-auto' viewBox="0 0 56 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,7 +54,7 @@ const checkDevice = () => {
     </div>
     <div className="z-10 flex fixed w-full justify-center items-center bottom-12">
 
-    <Link href="/gallery">
+    <Link href="/main-hall">
 
 
     <div className='flex justify-center items-center align-middle bg-slate-100  font-bold border-[#0057FF] lg:w-[150px] lg:h-[150px] w-[100px] h-[100px] px-4 py-4 text-center lg:text-lg text-md text-[#0057FF] rounded-full'>Go to gallery</div>

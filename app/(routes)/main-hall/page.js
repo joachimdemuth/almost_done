@@ -1,50 +1,68 @@
-'use client';
-
+'use client'
 import React, { useState, useEffect, useRef } from 'react';
-import { createClient } from '@supabase/supabase-js';
+
 import Masonry from 'react-masonry-css';
 import Image from 'next/image';
-
 import Link from 'next/link';
-import ArrowLeft from '../public/assets/icons/Arrow_left.svg';
-import ArrowRight from '../public/assets/icons/Arrow_right.svg';
-import Close from '../public/assets/icons/Close.svg';
-
-const supabase = createClient(
-	process.env.NEXT_PUBLIC_SUPABASE_URL,
-	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-);
-const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_BASE_URL;
+import ArrowLeft from '../../_assets/icons/Arrow_left.svg';
+import ArrowRight from '../../_assets/icons/Arrow_right.svg';
+import Close from '../../_assets/icons/Close.svg';
 var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+import { supabase } from '../../_utils/supabase';
+
+
+const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_BASE_URL;
 const mapboxToken =
 	'pk.eyJ1IjoiZGpoZXN0IiwiYSI6ImNsbDNpM2xyNTA0a3MzZW1jOXBxb3g2amkifQ.qz9ZHVYASWPzJ0uiwwHDOg';
 
-export default function Gallery() {
+export default function MainHall() {
 	const [allImages, setAllImages] = useState([]);
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 	const [isMapShowing, setIsMapShowing] = useState(false);
 	const [currentCoords, setCurrentCoords] = useState({});
+	const [device, setDevice] = useState('');
 
 	const bottomBarRef = useRef(null);
 	const mapContainer = useRef(null);
 	const mapRef = useRef(null);
 	const gridRef = useRef(null);
+
 	let marker; // Store the current marker if one exists
 
 	useEffect(() => {
-		async function getImages() {
-			const { data, error } = await supabase
-				.from('images_metadata')
-				.select('*');
-			if (error) {
-				console.error('error fetching images: ', error);
-			} else {
-				setAllImages(data);
-			}
-		}
-		getImages();
+		const fetchImages = async () => {
+		const { data, error } = await supabase.from('images_metadata').select('*');
+	if (error) {
+		console.error('error fetching images: ', error);
+	} else {
+		setAllImages(data);
+	}
+		};
+
+		fetchImages();
 	}, []);
+
+
+	useEffect(() => {
+		const handleResize = () => {
+			setDevice(checkDevice());
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	// function that checks if the device is mobile or not
+	const checkDevice = () => {
+		if (window.innerWidth > window.innerHeight) {
+			return 'horizontal';
+		} else {
+			return 'vertical';
+		}
+	};
+
 
 	const handleOpenLightbox = (id) => {
 		setCurrentImageIndex(id);
@@ -221,50 +239,34 @@ export default function Gallery() {
 					</svg>
 				</Link>
 			</div>
-<div className='lg:w-full pt-4 flex flex-wrap lg:px-20 justify-between items-center lg:py-10'>
-
+			<div className='lg:w-full pt-4 flex flex-wrap lg:px-20 justify-between items-center lg:py-10'>
 			<Masonry
-			breakpointCols={3}
-			ref={gridRef}
-			id='grid'
-			className='flex w-full lg:px-20 justify-between items-center lg:py-10'
-			>
-				{allImages.map((image, index) => {
-					return (
-						<div
-						onClick={() => handleOpenLightbox(index)}
-						key={index}
-						id='grid-item'
-						className='flex-1 lg:max-w-[450px] lg:h-auto hover:cursor-pointer'
-						>
-							<Image width={450} height={450} className='object-contain p-1' src={baseUrl + image?.file_path} />
-							{/* <p>{image.coords.lng + ", " + image.coords.lat}</p> */}
-							{/* <p className=' text-[#0057ff]'>Show on map</p> */}
-						</div>
-					);
-				})}
+					breakpointCols={device === 'horizontal' ? 3 : 1}
+					ref={gridRef}
+					id='grid'
+					className='flex w-full lg:px-20 justify-between items-start lg:py-10'
+				>
+					{allImages.map((image, index) => {
+						return (
+							<div
+								onClick={() => handleOpenLightbox(index)}
+								key={index}
+								id='grid-item'
+								className='flex-1 lg:max-w-[600px] lg:h-auto hover:cursor-pointer'
+							>
+								<Image
+									width={image.width}
+									height={image.height}
+									className='object-contain p-1'
+									alt={image?.desc}
+									src={baseUrl + image?.file_path}
+								/>
+							</div>
+						);
+					})}
 
-				{/* <div className='flex justify-between flex-row w-full'>
-            <div className='flex flex-col gap-4'>
-			<p className='font-bold'>{allImages[currentImageIndex]?.title}</p>
-			<p>{allImages[currentImageIndex]?.desc}</p>
-            </div>
-            <div className='flex flex-col gap-4'>
-			<p>{allImages[currentImageIndex]?.coords}</p>
-			<p className=' text-[#0057FF] underline'>Show on map</p>
-            </div>
-        </div> */}
-
-				{/* <div className='flex flex-row lg:w-3/4 lg:px-20 lg:h-24 justify-between items-center'>
-        <div className='flex w-full justify-between flex-row gap-4'>
-		<button onClick={handlePrevious} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Previous</button>
-		<p>{currentImageIndex+1}/{allImages.length}</p>
-		<button onClick={handleNext} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Next</button>
-		
-        </div>
-    </div> */}
-			</Masonry>
-	</div>
+				</Masonry>
+			</div>
 			{isLightboxOpen && (
 				<div className='fixed  justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
 					<div className='flex'>
@@ -272,11 +274,14 @@ export default function Gallery() {
 							<Image onClick={handleCloseLightbox} src={Close} />
 						</div>
 						{/* FULL SIZE IMAGE */}
-						<div className='flex justify-start items-start lg:h-[90%] h-auto w-full'>
+						<div className='flex relative bg-black justify-center items-start lg:h-[90%] h-auto w-full'>
 							<Image
-									layout='fill'
+							priority
+								width={2000}
+								height={1000}
 								className='object-cover'
 								src={baseUrl + allImages[currentImageIndex]?.file_path}
+								alt={allImages[currentImageIndex]?.desc}
 							/>
 						</div>
 					</div>
@@ -284,7 +289,7 @@ export default function Gallery() {
 					{/* BOTTOM BAR */}
 					<div
 						ref={bottomBarRef}
-						className={`flex text-[#0057ff] justify-between lg:px-12 lg:py-6 px-4 py-4 gap-2  bg-white flex-col  w-full  lg:h-${
+						className={`flex text-[#0057ff] justify-between lg:px-12 lg:py-6 px-4 py-4 gap-2 bg-opacity-60 backdrop-blur-md bg-white flex-col  w-full  lg:h-${
 							isMapShowing ? '1/2' : '[10%]'
 						} transition-transform overflow-hidden lg:absolute lg:bottom-0 `}
 					>
@@ -324,32 +329,33 @@ export default function Gallery() {
 								</div>
 							</div>
 							<div className='flex justify-center items-end gap-2 w-1/3 flex-col'>
-								<p className=' text-sm font-body'>
+								<p className=' text-sm font-bold'>
 									{allImages[currentImageIndex].coords.lng +
 										', ' +
 										allImages[currentImageIndex].coords.lat}
 								</p>
-								<p
+								{/* <p
 									onClick={toggleMap}
 									className=' hover:font-bold text-xs underline text-blue-500 text-center hover:cursor-pointer font-display hover:underline'
 								>
 									{isMapShowing ? 'Close map' : 'Show on map'}
-								</p>
+								</p> */}
 							</div>
 						</div>
 						{/* MAP */}
 
-						<div
+						{/* <div
 							ref={mapContainer}
 							className={`flex w-full h-full bg-white ${
 								isMapShowing ? 'visible' : 'hidden'
 							}`}
 						>
 							<div id='map' className=' w-full h-full rounded-xl'></div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			)}
 		</div>
 	);
 }
+
