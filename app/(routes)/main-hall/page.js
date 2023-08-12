@@ -203,7 +203,7 @@ export default function MainHall() {
 	};
 
 	return (
-		<div className='flex flex-col justify-start w-full items-center min-h-screen'>
+		<div className='flex flex-col justify-start w-full max-w-full items-center min-h-screen'>
 			<div className=' bg-white flex w-full px-6 h-16 lg:px-20 lg:h-24 lg:justify-start justify-center items-center'>
 				<Link href='/'>
 					<svg
@@ -247,12 +247,14 @@ export default function MainHall() {
 					className='flex w-full lg:px-20 justify-between items-start lg:py-10'
 				>
 					{allImages.map((image, index) => {
+						console.log(image)
+							console.log(baseUrl + image?.file_path)
 						return (
 							<div
 								onClick={() => handleOpenLightbox(index)}
 								key={index}
 								id='grid-item'
-								className='flex-1 lg:max-w-[600px] lg:h-auto hover:cursor-pointer'
+								className='flex-1 max-w-[392px] lg:max-w-[600px] lg:h-auto hover:cursor-pointer'
 							>
 								<Image
 									width={image.width}

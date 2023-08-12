@@ -37,7 +37,7 @@ export default function Upload() {
 
 
 	const containerRef = React.useRef(null);
-	
+
 
 
 	let currentMarker; // Store the current marker if one exists
@@ -112,10 +112,12 @@ export default function Upload() {
 			width,
 			height,
 		} = await handleImageCompression(file);
+		console.log(compressedFile, width, height);
+
 
 		const { data: uploadedData, error: uploadError } = await supabase.storage
 			.from('public-images')
-			.upload(`analog/${file.name}`, compressedFile);
+			.upload(`analog/${file.name}`, compressedFile, {contentType: 'image/jpeg'});
 
 		if (uploadError) {
 			console.error('Error uploading file', uploadError);
@@ -130,7 +132,7 @@ export default function Upload() {
 					desc: formData.desc,
 					coords: formData.coords,
 					camera: formData.camera,
-					file_path: `${file.name}`,
+					file_path: file.name,
 					width: width,
 					height: height,
 					time_of_capture: formData.date,
@@ -156,6 +158,7 @@ export default function Upload() {
 			coords: {},
 			date: '',
 			keywords: [],
+
 
 		})
 		setFile(null)

@@ -2,7 +2,8 @@
 import imageCompression from 'browser-image-compression';
 
 export async function handleImageCompression(uncompressedFile) {
-    const file = uncompressedFile;
+    console.log("starting compression for:", uncompressedFile)
+
 
     const options = {
         maxSizeMB: 1,
@@ -11,10 +12,12 @@ export async function handleImageCompression(uncompressedFile) {
     };
 
     try {
-        const compressedFile = await imageCompression(file, options);
+        const compressedFile = await imageCompression(uncompressedFile, options);
+        console.log("compression complete:", compressedFile)
         const dimensions = await getImageDimensions(compressedFile);
-
-        return {file: compressedFile, ...dimensions}
+        console.log("dimensions:", dimensions)
+        
+        return { newFile: compressedFile, width: dimensions.width, height: dimensions.height }
     } catch (error) {
         console.error('Image compression failed', error)
     }
