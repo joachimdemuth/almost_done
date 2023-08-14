@@ -160,7 +160,7 @@ export default function Upload() {
 		<div className='flex w-full min-h-screen flex-col'>
 			{/* HEADER */}
 
-			<div className='flex w-full justify-between items-center flex-row py-12 px-20'>
+			<div className='flex w-full justify-between items-center flex-row px-6 py-6 lg:py-12 lg:px-20'>
 				<div className='flex w-1/3 items-center justify-start'>
 					<Link href='/main-hall'>
 						<Image
@@ -171,7 +171,7 @@ export default function Upload() {
 					</Link>
 				</div>
 				<div className='flex w-1/3 justify-center items-center'>
-					<h1 className='w-full lg:text-[32px] text-center text-primary-blue text-lg font-display font-bold '>
+					<h1 className='w-full lg:text-[32px] text-center text-primary-blue text-2xl font-display font-bold '>
 						Upload image
 					</h1>
 				</div>
@@ -179,9 +179,9 @@ export default function Upload() {
 			</div>
 
 			{/* FORM CONTAINER */}
-			<div div className='flex w-full lg:py-12 lg:px-20 items-start'>
+			<div div className='flex w-full px-6 lg:py-12 lg:px-20 items-start'>
 				<form
-					className='flex w-full flex-row items-start gap-20'
+					className='flex w-full lg:flex-row max-lg:flex-col items-start gap-8 lg:gap-20'
 					onSubmit={(e) => e.preventDefault()}
 				>
 					<div className='flex flex-col w-full gap-2 flex-1 items-center'>
@@ -204,10 +204,10 @@ export default function Upload() {
 							</>
 						) : (
 							<label
-								className='flex min-h-[600px] justify-center items-center text-gray-400 border-2 border-gray-300 w-full bg-gray-100 rounded-lg'
+								className='flex min-h-[200px] lg:min-h-[600px] justify-center items-center text-gray-400 border-2 border-gray-300 w-full bg-gray-100 rounded-lg'
 								htmlFor='image'
 							>
-								<p className='text-center text-gray-400 text-2xl font-body'>Drag and drop or click to select</p>
+								<p className='text-center text-gray-400 text-lg lg:text-2xl font-body'>Drag and drop or click to select</p>
 							</label>
 						)}
 						</div>
@@ -235,16 +235,16 @@ export default function Upload() {
 								<p>{formData.camera ? formData.camera : "Camera"}</p>
 								<p>{formData.keywords ? formData.keywords.map((keyword) => {
 
-									return "#" + keyword + " "
+									return "#" + keyword.toString() + " "
 								}) : "#Keywords"}</p>
 							</div>
 						</div>
 					</div>
 
 					<div className='flex flex-col justify-between items-start w-full flex-1'>
-						<div className='flex flex-col items-start gap-16 w-full'>
-							<div className='flex flex-col items-start gap-10 w-full'>
-								<div className='flex items-start gap-4 w-full'>
+						<div className='flex flex-col items-start gap-4 lg:gap-16 w-full'>
+							<div className='flex flex-col items-start gap-4 lg:gap-10 w-full'>
+								<div className='flex max-lg:flex-col items-start gap-4 w-full'>
 									<InputField
 										type='text'
 										id='title'
@@ -263,7 +263,7 @@ export default function Upload() {
 										label='Description'
 									/>
 								</div>
-								<div className='flex items-start gap-4 w-full'>
+								<div className='flex max-lg:flex-col items-start gap-4 w-full'>
 									<ComboBox
 										label='Camera'
 										options={[

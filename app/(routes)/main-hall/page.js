@@ -65,9 +65,10 @@ export default function MainHall() {
 
 
 	const handleOpenLightbox = (id) => {
+		if(device === 'vertical') return;
 		setCurrentImageIndex(id);
 		setCurrentCoords(allImages[id].coords);
-		console.log(allImages[id].coords);
+
 		document.body.classList.add('overflow-hidden', 'fixed', 'w-full', 'h-full');
 		setIsLightboxOpen(true);
 	};
@@ -119,7 +120,7 @@ export default function MainHall() {
 
 	const moveMarkerTo = () => {
 		if (!marker) {
-			console.error('Marker has not yet been set');
+
 			return;
 		}
 
@@ -239,22 +240,22 @@ export default function MainHall() {
 					</svg>
 				</Link>
 			</div>
-			<div className='lg:w-full pt-4 flex flex-wrap lg:px-20 justify-between items-center lg:py-10'>
+			<div className='xl:w-full w-full pt-4 px-6 flex flex-wrap xl:px-20 justify-between items-center '>
 			<Masonry
 					breakpointCols={device === 'horizontal' ? 3 : 1}
 					ref={gridRef}
 					id='grid'
-					className='flex w-full lg:px-20 justify-between items-start lg:py-10'
+					className='flex w-full justify-center items-start '
 				>
 					{allImages.map((image, index) => {
-						console.log(image)
-							console.log(baseUrl + image?.file_path)
+
+
 						return (
 							<div
 								onClick={() => handleOpenLightbox(index)}
 								key={index}
 								id='grid-item'
-								className='flex-1 max-w-[392px] lg:max-w-[600px] lg:h-auto hover:cursor-pointer'
+								className='flex-1 w-full hover:cursor-pointer'
 							>
 								<Image
 									width={image.width}
@@ -270,7 +271,7 @@ export default function MainHall() {
 				</Masonry>
 			</div>
 			{isLightboxOpen && (
-				<div className='fixed  justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
+				<div className='fixed justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
 					<div className='flex h-full'>
 						<div className=' z-10 lg:w-[64px] lg:h-[64px] w-[24px] h-[24px] rounded-full fixed lg:top-12 lg:right-12 top-6 right-6 flex justify-center items-center cursor-pointer scale-75 hover:scale-100 transition-transform'>
 							<Image onClick={handleCloseLightbox} alt="Close" src={Close} />
