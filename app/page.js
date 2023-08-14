@@ -101,7 +101,7 @@ export default function Home() {
 					</g>
 				</svg>
 			</div>
-			<div className='z-10 flex flex-col w-full lg:px-20 gap-7 min-h-screen justify-end items-center'>
+			<div className='z-10 flex flex-col w-full lg:px-20 pb-20 min-h-screen justify-end items-center'>
 				<Link href='/main-hall'>
 					<div className='flex px-4 py-6  items-center justify-between gap-2 border-4 rounded-full  border-primary-lime-green hover:animate-[prolong_0.2s_ease-in-out_forwards]'>
 						<div className='flex items-center'>
