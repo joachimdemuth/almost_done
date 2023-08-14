@@ -58,12 +58,14 @@ export default function Home() {
 					<defs>
 						<filter id='y2kIndustrial' x='0' y='0' width='200%' height='200%'>
 							<feTurbulence baseFrequency={0} numOctaves='20' seed='10'>
-								<animate
+								{device === 'horizontal' && (
+									<animate
 									attributeName='baseFrequency'
 									dur='60s'
 									values='0;.1'
 									repeatCount='indefinite'
-								/>
+									/>
+									)}
 							</feTurbulence>
 							
 							<feDisplacementMap in='SourceGraphic' scale={10}>
