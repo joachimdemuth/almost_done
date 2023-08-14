@@ -57,7 +57,7 @@ export default function Home() {
 					<svg className='w-[80%] max-w-[800px] h-auto' overflow={'visible'} viewBox="0 0 56 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<defs>
 						<filter id='y2kIndustrial' x='0' y='0' width='200%' height='200%'>
-							<feTurbulence baseFrequency={2} numOctaves='20' seed='10'>
+							<feTurbulence baseFrequency={0} numOctaves='20' seed='10'>
 								{device === 'horizontal' && (
 									<animate
 									attributeName='baseFrequency'
@@ -68,7 +68,7 @@ export default function Home() {
 									)}
 							</feTurbulence>
 							
-							<feDisplacementMap in='SourceGraphic' scale={5}>
+							<feDisplacementMap in='SourceGraphic' scale={10}>
 								
 							</feDisplacementMap>
 						</filter>
