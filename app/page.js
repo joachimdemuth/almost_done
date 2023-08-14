@@ -44,7 +44,7 @@ export default function Home() {
 
 
 	return (
-		<div className='flex flex-col w-full min-h-screen justify-center items-center'>
+		<div className='flex fixed top-0 left-0 flex-col w-full min-h-screen justify-center items-center'>
 			<div className='w-full min-h-screen fixed top-0 left-0 '>
 				<Image
 					src={device === 'horizontal' ? bgHoriz : bgVert}
@@ -57,7 +57,7 @@ export default function Home() {
 					<svg className='w-[80%] max-w-[800px] h-auto' overflow={'visible'} viewBox="0 0 56 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<defs>
 						<filter id='y2kIndustrial' x='0' y='0' width='200%' height='200%'>
-							<feTurbulence baseFrequency={0} numOctaves='20' seed='10'>
+							<feTurbulence baseFrequency={2} numOctaves='20' seed='10'>
 								{device === 'horizontal' && (
 									<animate
 									attributeName='baseFrequency'
@@ -68,7 +68,7 @@ export default function Home() {
 									)}
 							</feTurbulence>
 							
-							<feDisplacementMap in='SourceGraphic' scale={10}>
+							<feDisplacementMap in='SourceGraphic' scale={5}>
 								
 							</feDisplacementMap>
 						</filter>
@@ -101,7 +101,7 @@ export default function Home() {
 					</g>
 				</svg>
 			</div>
-			<div className='z-10 fixed top-0 left-0 flex flex-col w-full lg:px-20 pb-20 min-h-screen justify-end items-center'>
+			<div className='z-10 flex flex-col w-full lg:px-20 pb-20 min-h-screen justify-end items-center'>
 				<Link href='/main-hall'>
 					<div className='flex px-4 py-6  items-center justify-between gap-2 border-4 rounded-full  border-primary-lime-green hover:animate-[prolong_0.2s_ease-in-out_forwards]'>
 						<div className='flex items-center'>
