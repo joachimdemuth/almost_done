@@ -1,10 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-
 import InputField from '../../_components/InputField';
-import TextArea from '../../_components/TextArea';
 import ComboBox from '../../_components/ComboBox';
-import 'mapbox-gl/dist/mapbox-gl.css'
+import 'mapbox-gl/dist/mapbox-gl.css';
 import LeftArrow from '../../_assets/icons/Arrow_left.svg';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,9 +15,6 @@ import checkDevice from '../../_lib/checkDevice';
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 const mapboxToken =
 	'pk.eyJ1IjoiZGpoZXN0IiwiYSI6ImNsbDNpM2xyNTA0a3MzZW1jOXBxb3g2amkifQ.qz9ZHVYASWPzJ0uiwwHDOg';
-
-
-
 
 export default function Upload() {
 	const [formData, setFormData] = useState({
@@ -35,26 +30,18 @@ export default function Upload() {
 	const [uploading, setUploading] = useState(false);
 	const [open, setOpen] = useState(false);
 
-
 	const containerRef = React.useRef(null);
-
-
 
 	let currentMarker; // Store the current marker if one exists
 	const router = useRouter();
 
 	useEffect(() => {
 		const res = supabase.auth.getUser().then((res) => {
-
 			if (res.data.user === null) {
 				router.push('/login');
 			} else return;
-		}
-		)
-
-	}, [router])
-	
-	
+		});
+	}, [router]);
 
 	useEffect(() => {
 		mapboxgl.accessToken = mapboxToken || '';
@@ -86,11 +73,11 @@ export default function Upload() {
 
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
-		  return;
+			return;
 		}
-	
+
 		setOpen(false);
-	  };
+	};
 
 	const onFileChange = (event) => {
 		if (!event.target.files[0]) return;
@@ -114,10 +101,11 @@ export default function Upload() {
 		} = await handleImageCompression(file);
 		console.log(compressedFile, width, height);
 
-
 		const { data: uploadedData, error: uploadError } = await supabase.storage
 			.from('public-images')
-			.upload(`analog/${file.name}`, compressedFile, {contentType: 'image/jpeg'});
+			.upload(`analog/${file.name}`, compressedFile, {
+				contentType: 'image/jpeg',
+			});
 
 		if (uploadError) {
 			console.error('Error uploading file', uploadError);
@@ -142,14 +130,13 @@ export default function Upload() {
 
 		if (metadataData) {
 			console.log('Metadata uploaded:', metadataData);
-			
 		}
-		
+
 		if (metadataError) {
 			console.error('Error uploading metadata', metadataError);
 		}
 		setUploading(false);
-		alert('Image uploaded!')
+		alert('Image uploaded!');
 		// when alert is closed, redirect to main hall
 		setFormData({
 			title: '',
@@ -158,12 +145,10 @@ export default function Upload() {
 			coords: {},
 			date: '',
 			keywords: [],
-
-
-		})
-		setFile(null)
-		setPreviewURL(null)
-		setOpen(true)
+		});
+		setFile(null);
+		setPreviewURL(null);
+		setOpen(true);
 	}
 
 	const handleChange = (event) => {
@@ -172,27 +157,37 @@ export default function Upload() {
 	};
 
 	return (
-		<>
-			<div className=' flex w-full min-h-screen flex-col items-center lg:gap-20 gap-8 px-4 lg:py-20'>
-				<div className='flex w-full justify-center items-center h-12 flex-row lg:px-20 '>
-					<div className='flex w-1/3'>
-						<Link href='/main-hall'>
-							<Image width={checkDevice === false ? 64 : 48} src={LeftArrow} alt='back' />
-						</Link>
-					</div>
-					<div className='flex w-1/3 justify-center'>
-						<h1 className='w-full lg:text-4xl text-center text-[#005cff] text-lg font-display font-bold '>Upload image</h1>
-					</div>
-					<div className='flex w-1/3'></div>
-				</div>
+		<div className='flex w-full min-h-screen flex-col'>
+			{/* HEADER */}
 
+			<div className='flex w-full justify-between items-center flex-row py-12 px-20'>
+				<div className='flex w-1/3 items-center justify-start'>
+					<Link href='/main-hall'>
+						<Image
+							width={checkDevice === false ? 64 : 48}
+							src={LeftArrow}
+							alt='back'
+						/>
+					</Link>
+				</div>
+				<div className='flex w-1/3 justify-center items-center'>
+					<h1 className='w-full lg:text-[32px] text-center text-primary-blue text-lg font-display font-bold '>
+						Upload image
+					</h1>
+				</div>
+				<div className='flex w-1/3'></div>
+			</div>
+
+			{/* FORM CONTAINER */}
+			<div div className='flex w-full lg:py-12 lg:px-20 items-start'>
 				<form
-					className='flex lg:w-1/2 w-full gap-6 flex-col'
+					className='flex w-full flex-row items-start gap-20'
 					onSubmit={(e) => e.preventDefault()}
 				>
-					<div className='flex flex-col items-start'>
+					<div className='flex flex-col w-full gap-2 flex-1 items-center'>
+						<div className='flex h-full justify-center items-center w-full'>
 						{previewURL ? (
-							<div className='flex w-full max-h[50px] items-center justify-between flex-row gap-2'>
+							<>
 								<Image
 									width={100}
 									height={100}
@@ -206,15 +201,16 @@ export default function Upload() {
 								>
 									<p className='text-center'>Change image</p>
 								</label>
-							</div>
+							</>
 						) : (
 							<label
-								className='flex justify-center items-center text-gray-400 border-2 border-gray-300 w-full h-32 bg-gray-100 rounded-lg'
+								className='flex min-h-[600px] justify-center items-center text-gray-400 border-2 border-gray-300 w-full bg-gray-100 rounded-lg'
 								htmlFor='image'
 							>
-								<p className='text-center'>Drag and drop or click to select</p>
+								<p className='text-center text-gray-400 text-2xl font-body'>Drag and drop or click to select</p>
 							</label>
 						)}
+						</div>
 						<input
 							className=' hidden'
 							type='file'
@@ -222,87 +218,110 @@ export default function Upload() {
 							name='image'
 							onChange={onFileChange}
 						/>
-					</div>
-						<div className='hidden lg:flex lg:flex-row lg:gap-4'>
-							
-					<div className='flex flex-col w-full'>
-						<InputField
-							type='text'
-							id='title'
-							name='title'
-							value={formData.title}
-							onChange={handleChange}
-							label='Title'
-							/>
-					</div>
-
-					<div className='flex flex-col w-full'>
-						<TextArea
-							type='text'
-							id='desc'
-							name='desc'
-							value={formData.desc}
-							onChange={handleChange}
-							label='Description'
-							/>
-					</div>
+						<div className='flex w-full items-start h-full'>
+							<div className='flex w-full flex-col items-start gap-1 justify-between font-body text-primary-blue text-lg'>
+								<p className='font-bold'>{formData.title ? formData.title : "Title"}</p>
+								<p>{formData.desc ? formData.desc : "Description"}</p>
+								<p>{formData.date ? formData.date : "dd.mm.yyyy"}</p>
 							</div>
+							<div className='flex w-full flex-col items-end gap-1  text-primary-blue text-lg'>
 
-					<div className='flex flex-col'>
-						<KeywordsInput formData={formData} setFormData={setFormData} />
+									{formData.coords.lng !== undefined ? (
+										<p className='font-display font-bold'>
+											{formData.coords.lng + ', ' + formData.coords.lat}
+										</p>
+									) : (<p className='font-display font-bold'>00.000000, 00.000000</p>)}
 
-					</div>
+								<p>{formData.camera ? formData.camera : "Camera"}</p>
+								<p>{formData.keywords ? formData.keywords.map((keyword) => {
 
-					<div className='flex flex-col'>
-						<ComboBox
-							label='Camera'
-							options={['Olympus OM-1', 'Olympus MJU-I', 'iPhone 14 Pro', 'iPhone 6s', 'iPhone 11 Pro']}
-							selected={formData.camera}
-							onSelectedChange={handleChange}
-							name='camera'
-						/>
-					</div>
-					<div>
-						<input className='bg-gray-100 border-2 border-gray-300 rounded-lg h-12 px-2 w-full' onChange={handleChange} type="date" name="date" id="date" />
-
-					</div>
-
-					<div className='flex flex-col'>
-						<p className='font-display font-bold'>Choose location</p>
-						<div
-							ref={containerRef}
-							id='map'
-							className=' w-full h-[300px]'
-						></div>
-						<div>
-							{formData.coords.lng !== undefined &&  (
-								<p className='font-display font-bold'>
-									{formData.coords.lng + ', ' + formData.coords.lat}
-								</p>
-							)}
+									return "#" + keyword + " "
+								}) : "#Keywords"}</p>
+							</div>
 						</div>
 					</div>
 
+					<div className='flex flex-col justify-between items-start w-full flex-1'>
+						<div className='flex flex-col items-start gap-16 w-full'>
+							<div className='flex flex-col items-start gap-10 w-full'>
+								<div className='flex items-start gap-4 w-full'>
+									<InputField
+										type='text'
+										id='title'
+										name='title'
+										value={formData.title}
+										onChange={handleChange}
+										label='Title'
+									/>
 
-					<button
-						className='px-8 py-4 bg-[#0057FF] rounded-md text-white font-bold'
-						onClick={uploadImage}
-						type='button'
-						disabled={uploading}
-					>
-						{uploading ? 'Uploading...' : 'Upload'}
-					</button>
+									<InputField
+										type='text'
+										id='desc'
+										name='desc'
+										value={formData.desc}
+										onChange={handleChange}
+										label='Description'
+									/>
+								</div>
+								<div className='flex items-start gap-4 w-full'>
+									<ComboBox
+										label='Camera'
+										options={[
+											'Olympus OM-1',
+											'Olympus MJU-I',
+											'iPhone 14 Pro',
+											'iPhone 6s',
+											'iPhone 11 Pro',
+										]}
+										selected={formData.camera}
+										onSelectedChange={handleChange}
+										name='camera'
+									/>
+
+									<input
+										className='bg-gray-100 border-2 border-gray-300 rounded-lg h-12 px-2 w-full'
+										onChange={handleChange}
+										type='date'
+										name='date'
+										id='date'
+									/>
+								</div>
+								<div className='flex flex-col items-start gap-4 w-full'>
+									<div className='flex flex-col items-startgap-2 w-full'>
+										<KeywordsInput
+											formData={formData}
+											setFormData={setFormData}
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div
+								ref={containerRef}
+								id='map'
+								className=' w-full h-[300px] rounded-[4px]'
+							></div>
+							<div className='flex  justify-center items-center w-full'>
+								<button
+									className='w-full bg-primary-blue px-6 min-w-[120px] h-12 rounded-[4px] text-primary-white font-bold'
+									onClick={uploadImage}
+									type='button'
+									disabled={uploading}
+								>
+									{uploading ? 'Uploading...' : 'Upload'}
+								</button>
+							</div>
+						</div>
+					</div>
 				</form>
 			</div>
 
 			<Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message="Image uploaded successfully!"
-
-      />
-
-		</>
+				open={open}
+				autoHideDuration={6000}
+				onClose={handleClose}
+				message='Image uploaded successfully!'
+			/>
+		</div>
 	);
 }

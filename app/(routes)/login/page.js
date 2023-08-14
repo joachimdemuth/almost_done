@@ -3,7 +3,8 @@
 import React, {useState, useEffect} from 'react';
 import { supabase } from '../../_utils/supabase';
 import { useRouter } from 'next/navigation';
-
+import Image from 'next/image';
+import bg from '../../_assets/bg_image/italy-18.webp'
 
 
 export default function Login() {
@@ -57,20 +58,27 @@ const handleSubmit = async (e) => {
 return (
   // a modern looking login form with email and password fields
 
-  <div className="flex flex-col items-center justify-center min-h-screen py-2">
+  <div className="flex flex-row items-center justify-center w-full min-h-screen overflow-hidden">
+    <div className='flex h-screen flex-row overflow-hidden'> 
+    <Image className='flex-1 max-h-screen object-contain w-auto' src={bg} alt="background" width={2000}  />
+    </div>
 
 
-    <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-      <h1 className="text-6xl font-bold">
+    <main className="flex bg-gray-100 h-screen flex-col items-center justify-center w-full flex-1 px-20 text-center">
+      <div className='flex flex-col bg-white p-20 box-border rounded-xl gap-12'>
+      <div className='flex flex-col'>
+
+      <h1 className="xl:text-6xl lg:text-3xl font-bold">
         Welcome to{' '}
-        <a className="text-blue-600" href="https://analog.gallery">
-          Analog Gallery!
-        </a>
+        <span className="text-blue-600" >
+          Almost Done
+        </span>
       </h1>
 
-      <p className="mt-3 text-2xl">
+      <p className="mt-3 xl:text-2xl lg:text-lg">
         Log in to upload your photos!
       </p>
+      </div>
 
       <div className="flex flex-col items-center justify-center mt-8">
         <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
@@ -86,7 +94,7 @@ return (
             type="password"
             placeholder="Password"
 
-            className="w-80 h-12 px-3 mb-4 placeholder-gray-400 border rounded-lg focus:shadow-outline"
+            className="w-80 h-12 px-3 mb-16 placeholder-gray-400 border rounded-lg focus:shadow-outline"
             onChange={handleInputChange}
           />
           <button
@@ -98,6 +106,8 @@ return (
           </button>
         </form>
       </div>
+      </div>
+
     </main>
 
     
