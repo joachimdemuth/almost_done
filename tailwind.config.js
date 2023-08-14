@@ -32,6 +32,17 @@ module.exports = {
           'sans-serif'
         ],
       },
+      animation: {
+        'prolong' : 'prolong 0.2s ease-in-out forwards',
+      },
+      keyframes: {
+        'prolong' : {
+          '0%' : { borderRadius: '50px',
+        background: 'transparent'},
+          '100%' : { borderRadius: '8px',
+        background: '#52ff0050' },
+        }
+      }
     },
   },
   plugins: [],

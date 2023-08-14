@@ -3,17 +3,22 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import bgHoriz from './_assets/bg_image/italy-35.webp';
 import bgVert from './_assets/bg_image/italy-24.webp';
-import logo from './_assets/Logo_2.svg';
+import tailwindConfig from '../tailwind.config.js'
 import Link from 'next/link';
 import '../styles/globals.css';
-import useMousePosition from './_hooks/useMousePosition';
+
 
 export default function Home() {
 	const [device, setDevice] = useState('horizontal');
 
+
+	const screens = tailwindConfig.theme.screens;
+
 	useEffect(() => {
 		const handleResize = () => {
 			setDevice(checkDevice());
+			
+
 		};
 
 		window.addEventListener('resize', handleResize);
@@ -34,6 +39,10 @@ export default function Home() {
 		}
 	};
 
+
+	 
+
+
 	return (
 		<div className='flex flex-col w-full min-h-screen justify-center items-center'>
 			<div className='w-full min-h-screen fixed top-0 left-0 '>
@@ -43,23 +52,23 @@ export default function Home() {
 					className='w-full min-h-screen object-cover'
 				/>
 			</div>
-			<div className='flex min-w-full min-h-screen text-center content-center justify-center items-center z-10'>
+			<div className='flex fixed top-0 left-0 min-w-full min-h-screen text-center content-center justify-center items-center z-10'>
 				
-					<svg overflow={'visible'} width="1200" height="800" viewBox="0 0 56 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg className='w-[80%] max-w-[800px] h-auto' overflow={'visible'} viewBox="0 0 56 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<defs>
 						<filter id='y2kIndustrial' x='0' y='0' width='200%' height='200%'>
-							<feTurbulence baseFrequency={20} numOctaves='20' seed='10'>
-								{/* <animate
+							<feTurbulence baseFrequency={0} numOctaves='20' seed='10'>
+								<animate
 									attributeName='baseFrequency'
-									dur='20s'
-									// values={`${baseFrequency};${baseFrequency * 2};${
-									// 	baseFrequency * 2
-									// }`}
-									values='0.01;0.02;0.01'
+									dur='60s'
+									values='0;.1'
 									repeatCount='indefinite'
-								/> */}
+								/>
 							</feTurbulence>
-							<feDisplacementMap in='SourceGraphic' scale={5} />
+							
+							<feDisplacementMap in='SourceGraphic' scale={10}>
+								
+							</feDisplacementMap>
 						</filter>
 					</defs>
 					<g filter='url(#y2kIndustrial)'>
@@ -90,9 +99,9 @@ export default function Home() {
 					</g>
 				</svg>
 			</div>
-			<div className='z-10 flex fixed w-full justify-center items-center bottom-12'>
+			<div className='z-10 flex flex-col w-full lg:px-20 gap-7 min-h-screen justify-end items-center'>
 				<Link href='/main-hall'>
-					<div className='flex px-4 py-6 items-center border-8 rounded-full gap-2 border-primary-lime-green'>
+					<div className='flex px-4 py-6  items-center justify-between gap-2 border-4 rounded-full  border-primary-lime-green hover:animate-[prolong_0.2s_ease-in-out_forwards]'>
 						<div className='flex items-center'>
 							<p className=' text-lg font-bold font-display leading-normal text-primary-lime-green'>
 								Go to gallery
@@ -114,6 +123,11 @@ export default function Home() {
 						</div>
 					</div>
 				</Link>
+			<footer className='flex w-full h-16 lg:justify-start justify-center items-center'>
+				<p className='text-center text-primary-lime-green font-display font-bold text-lg'>
+					© 2023 Almost Done
+				</p>
+			</footer>
 			</div>
 		</div>
 	);
