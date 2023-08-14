@@ -13,15 +13,17 @@ export default function RootLayout({ children }) {
 					href='https://fonts.cdnfonts.com/css/tasa-orbiter-display'
 					rel='stylesheet'
 				></link>
-				<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-				<meta name="theme-color" content="#52ff00"></meta>
+				<meta
+					name='viewport'
+					content='width=device-width, initial-scale=1.0'
+				></meta>
 
+				<meta name='theme-color' content='#52ff00'></meta>
 
 				<link
 					href='https://fonts.cdnfonts.com/css/tasa-orbiter-text'
 					rel='stylesheet'
 				></link>
-
 			</head>
 			<body className='font-body'>{children}</body>
 		</html>

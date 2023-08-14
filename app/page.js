@@ -52,7 +52,7 @@ export default function Home() {
 					className='w-full min-h-screen object-cover'
 				/>
 			</div>
-			<div className='flex fixed top-0 left-0 min-w-full min-h-screen text-center max-lg:pt-40 max-lg:items-start lg:justify-center lg:items-center z-10'>
+			<div className='flex fixed top-0 left-0 min-w-full min-h-screen text-center max-lg:pt-40 max-lg:items-start justify-center lg:items-center z-10'>
 				
 					<svg className='w-[80%] max-w-[800px] h-auto' overflow={'visible'} viewBox="0 0 56 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<defs>
@@ -68,7 +68,7 @@ export default function Home() {
 									)}
 							</feTurbulence>
 							
-							<feDisplacementMap in='SourceGraphic' scale={10}>
+							<feDisplacementMap in='SourceGraphic' scale={0}>
 								
 							</feDisplacementMap>
 						</filter>
@@ -101,7 +101,7 @@ export default function Home() {
 					</g>
 				</svg>
 			</div>
-			<div className='z-10 flex flex-col w-full lg:px-20 pb-20 min-h-screen justify-end items-center'>
+			<div className='z-10 flex flex-col w-full lg:px-20  min-h-screen justify-end items-center pb-20'>
 				<Link href='/main-hall'>
 					<div className='flex px-4 py-6  items-center justify-between gap-2 border-4 rounded-full  border-primary-lime-green hover:animate-[prolong_0.2s_ease-in-out_forwards]'>
 						<div className='flex items-center'>
