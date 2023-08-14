@@ -173,15 +173,15 @@ export default function Upload() {
 
 	return (
 		<>
-			<div className=' flex w-full min-h-screen flex-col items-center lg:gap-20 gap-8 px-4 py-20'>
-				<div className='flex w-full justify-center items-center flex-row lg:px-20 '>
+			<div className=' flex w-full min-h-screen flex-col items-center lg:gap-20 gap-8 px-4 lg:py-20'>
+				<div className='flex w-full justify-center items-center h-12 flex-row lg:px-20 '>
 					<div className='flex w-1/3'>
 						<Link href='/main-hall'>
 							<Image width={checkDevice === false ? 64 : 48} src={LeftArrow} alt='back' />
 						</Link>
 					</div>
 					<div className='flex w-1/3 justify-center'>
-						<h1 className='w-full lg:text-4xl text-center text-[#005cff] text-2xl font-display font-bold '>Upload image</h1>
+						<h1 className='w-full lg:text-4xl text-center text-[#005cff] text-lg font-display font-bold '>Upload image</h1>
 					</div>
 					<div className='flex w-1/3'></div>
 				</div>
@@ -190,18 +190,18 @@ export default function Upload() {
 					className='flex lg:w-1/2 w-full gap-6 flex-col'
 					onSubmit={(e) => e.preventDefault()}
 				>
-					<div className='flex flex-col'>
+					<div className='flex flex-col items-start'>
 						{previewURL ? (
-							<div className='flex  items-center flex-col gap-2'>
+							<div className='flex w-full max-h[50px] items-center justify-between flex-row gap-2'>
 								<Image
-									width={500}
-									height={500}
+									width={100}
+									height={100}
 									src={previewURL}
 									alt='preview'
-									className='w-1/2 h-auto object-cover '
+									className=' object-cover '
 								/>
 								<label
-									className='flex w-1/2 justify-center items-center text-black bg-red-100 rounded-lg py-2 px-4'
+									className='flex  justify-center items-center text-black bg-red-100 rounded-lg py-2 px-4'
 									htmlFor='image'
 								>
 									<p className='text-center'>Change image</p>
@@ -223,8 +223,9 @@ export default function Upload() {
 							onChange={onFileChange}
 						/>
 					</div>
-
-					<div className='flex flex-col'>
+						<div className='hidden lg:flex lg:flex-row lg:gap-4'>
+							
+					<div className='flex flex-col w-full'>
 						<InputField
 							type='text'
 							id='title'
@@ -232,10 +233,10 @@ export default function Upload() {
 							value={formData.title}
 							onChange={handleChange}
 							label='Title'
-						/>
+							/>
 					</div>
 
-					<div className='flex flex-col'>
+					<div className='flex flex-col w-full'>
 						<TextArea
 							type='text'
 							id='desc'
@@ -243,8 +244,9 @@ export default function Upload() {
 							value={formData.desc}
 							onChange={handleChange}
 							label='Description'
-						/>
+							/>
 					</div>
+							</div>
 
 					<div className='flex flex-col'>
 						<KeywordsInput formData={formData} setFormData={setFormData} />
@@ -254,7 +256,7 @@ export default function Upload() {
 					<div className='flex flex-col'>
 						<ComboBox
 							label='Camera'
-							options={['Olympus OM-1', 'Olympus MJU-I', 'iPhone 14 Pro']}
+							options={['Olympus OM-1', 'Olympus MJU-I', 'iPhone 14 Pro', 'iPhone 6s', 'iPhone 11 Pro']}
 							selected={formData.camera}
 							onSelectedChange={handleChange}
 							name='camera'

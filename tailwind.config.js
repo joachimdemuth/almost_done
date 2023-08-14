@@ -6,7 +6,7 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    theme: {
+    extend: {
       fontFamily: {
         'body': [
           'TASA Orbiter Text',

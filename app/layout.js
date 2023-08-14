@@ -1,19 +1,25 @@
-
-import '../styles/globals.css'
-
+import '../styles/globals.css';
 
 export const metadata = {
-  title: 'Almost Done',
-  description: 'Photo gallery',
-}
+	title: 'Almost Done',
+	description: 'Photo gallery',
+};
 
 export default function RootLayout({ children }) {
+	return (
+		<html lang='en'>
+			<head>
+				<link
+					href='https://fonts.cdnfonts.com/css/tasa-orbiter-display'
+					rel='stylesheet'
+				></link>
+				<link
+					href='https://fonts.cdnfonts.com/css/tasa-orbiter-text'
+					rel='stylesheet'
+				></link>
 
-
-
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+			</head>
+			<body className='font-body'>{children}</body>
+		</html>
+	);
 }
