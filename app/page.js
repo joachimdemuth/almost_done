@@ -68,7 +68,7 @@ export default function Home() {
 									)}
 							</feTurbulence>
 							
-							<feDisplacementMap in='SourceGraphic' scale={0}>
+							<feDisplacementMap in='SourceGraphic' scale={2}>
 								
 							</feDisplacementMap>
 						</filter>
