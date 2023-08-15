@@ -12,6 +12,7 @@ import { supabase } from '../../_utils/supabase';
 import KeywordsInput from './KeywordComponent';
 import Snackbar from '@mui/material/Snackbar';
 import checkDevice from '../../_lib/checkDevice';
+import { getImageDimensions } from '../../_lib/imageCompression';
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 const mapboxToken =
 	'pk.eyJ1IjoiZGpoZXN0IiwiYSI6ImNsbDNpM2xyNTA0a3MzZW1jOXBxb3g2amkifQ.qz9ZHVYASWPzJ0uiwwHDOg';
@@ -94,16 +95,19 @@ export default function Upload() {
 			return;
 		}
 
-		const {
-			newFile: compressedFile,
-			width,
-			height,
-		} = await handleImageCompression(file);
-		console.log(compressedFile, width, height);
+		// const {
+		// 	newFile: compressedFile,
+		// 	width,
+		// 	height,
+		// } = await handleImageCompression(file);
+		// console.log(compressedFile, width, height);
+
+		const { width, height } = await getImageDimensions(file);
+
 
 		const { data: uploadedData, error: uploadError } = await supabase.storage
 			.from('public-images')
-			.upload(`analog/${file.name}`, compressedFile, {
+			.upload(`analog/${file.name}`, file, {
 				contentType: 'image/jpeg',
 			});
 

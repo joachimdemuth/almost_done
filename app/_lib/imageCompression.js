@@ -23,7 +23,7 @@ export async function handleImageCompression(uncompressedFile) {
     }
 }
 
-function getImageDimensions(file) {
+export async function getImageDimensions(file) {
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = function()  {
