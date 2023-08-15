@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import bgHoriz from './_assets/bg_image/italy-35.webp';
-import bgVert from './_assets/bg_image/italy-24.webp';
+import bgHoriz from './_assets/bg_image/italy-35.jpg';
+import bgVert from './_assets/bg_image/italy-24.jpg';
 import tailwindConfig from '../tailwind.config.js'
 import Link from 'next/link';
 import '../styles/globals.css';
@@ -13,6 +13,7 @@ export default function Home() {
 
 
 	const screens = tailwindConfig.theme.screens;
+
 
 	useEffect(() => {
 		const handleResize = () => {
