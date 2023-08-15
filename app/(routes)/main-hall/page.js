@@ -240,7 +240,7 @@ export default function MainHall() {
 					</svg>
 				</Link>
 			</div>
-			<div className='xl:w-full w-full pt-4 px-6 flex flex-wrap xl:px-20 justify-between items-center '>
+			<div className='xl:w-full w-full pt-4 px-6 flex flex-wrap xl:px-80 justify-between items-center '>
 			<Masonry
 					breakpointCols={device === 'horizontal' ? 3 : 1}
 					ref={gridRef}
@@ -255,7 +255,7 @@ export default function MainHall() {
 								onClick={() => handleOpenLightbox(index)}
 								key={index}
 								id='grid-item'
-								className='flex-1 w-full hover:cursor-pointer'
+								className='flex-1 w-full xl:max-w-[800px] hover:cursor-pointer'
 							>
 								<Image
 									width={image.width}

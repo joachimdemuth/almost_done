@@ -24,7 +24,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'body': [
-          'TASA Orbiter Text',
+          'TASA Explorer',
           'sans-serif'
         ],
         'display': [
@@ -33,7 +33,7 @@ module.exports = {
         ],
       },
       animation: {
-        'prolong' : 'prolong 0.2s ease-in-out forwards',
+        'prolong' : 'prolong 0.s ease-in-out forwards',
       },
       keyframes: {
         'prolong' : {
