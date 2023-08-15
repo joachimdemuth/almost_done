@@ -45,6 +45,7 @@ export default function MainHall() {
 
 
 	useEffect(() => {
+		setDevice(checkDevice());
 		const handleResize = () => {
 			setDevice(checkDevice());
 		};
@@ -240,22 +241,24 @@ export default function MainHall() {
 					</svg>
 				</Link>
 			</div>
-			<div className='xl:w-full w-full pt-4 px-6 flex flex-wrap xl:px-80 justify-between items-center '>
-			<Masonry
+			<div className='xl:w-full w-full pt-4 px-6 flex flex-wrap md:px-20 xl:px-80 justify-between items-center '>
+
+
+					<Masonry
 					breakpointCols={device === 'horizontal' ? 3 : 1}
 					ref={gridRef}
 					id='grid'
 					className='flex w-full justify-center items-start '
-				>
+					>
 					{allImages.map((image, index) => {
-
-
+						
+						
 						return (
 							<div
-								onClick={() => handleOpenLightbox(index)}
-								key={index}
-								id='grid-item'
-								className='flex-1 w-full xl:max-w-[800px] hover:cursor-pointer'
+							onClick={() => handleOpenLightbox(index)}
+							key={index}
+							id='grid-item'
+							className='flex-1 w-full xl:max-w-[800px] hover:cursor-pointer'
 							>
 								<Image
 									width={image.width}
@@ -264,12 +267,13 @@ export default function MainHall() {
 									alt={image?.desc}
 									src={baseUrl + image?.file_path}
 									quality={100}
-								/>
+									/>
 							</div>
 						);
 					})}
 
 				</Masonry>
+
 			</div>
 			{isLightboxOpen && (
 				<div className='fixed justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
