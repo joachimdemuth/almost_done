@@ -44,7 +44,7 @@ export default function Home() {
 
 
 	return (
-		<div className='flex fixed top-0 left-0 flex-col w-full min-h-screen justify-center items-center'>
+		<div className='flex fixed top-0 left-0 flex-col w-full min-h-screen max-h-screen justify-center items-center'>
 			<div className='w-full min-h-screen fixed top-0 left-0 '>
 				<Image
 					src={device === 'horizontal' ? bgHoriz : bgVert}
@@ -52,7 +52,7 @@ export default function Home() {
 					className='w-full min-h-screen object-cover'
 				/>
 			</div>
-			<div className='flex fixed top-0 left-0 min-w-full min-h-screen text-center max-lg:pt-40 max-lg:items-start justify-center lg:items-center z-10'>
+			<div className='flex fixed top-0 left-0 min-w-full min-h-screen max-lg:pt-40 max-lg:items-start justify-center items-center lg:items-center z-10'>
 				
 					<svg className='w-[80%] max-w-[800px] h-auto' overflow={'visible'} viewBox="0 0 56 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<defs>
@@ -100,10 +100,11 @@ export default function Home() {
 						/>
 					</g>
 				</svg>
+				
 			</div>
-			<div className='z-10 flex flex-col w-full lg:px-20  min-h-screen justify-end items-center pb-20'>
+			<div className='z-10 flex fixed flex-col w-full lg:px-20 min-h-screen max-md:bottom-16  justify-end items-center pb-20'>
 				<Link href='/main-hall'>
-					<div className='flex px-4 py-6  items-center justify-between gap-2 border-4 rounded-full  border-primary-lime-green hover:animate-[prolong_0.2s_ease-in-out_forwards]'>
+					<div className='flex px-4 py-6  items-center gap-2 border-4 rounded-full  border-primary-lime-green hover:animate-[prolong_0.2s_ease-in-out_forwards]'>
 						<div className='flex items-center'>
 							<p className=' text-lg font-bold font-display leading-normal text-primary-lime-green'>
 								Go to gallery
@@ -127,7 +128,7 @@ export default function Home() {
 				</Link>
 			</div>
 			<footer className='flex fixed lg:px-20 max-lg:px-6 bottom-0 left-0 w-full box-border py-4 lg:justify-start justify-center items-center'>
-				<p className='text-center text-primary-lime-green font-display font-bold text-lg'>
+				<p className='text-center text-primary-lime-green font-display font-bold text-md md:text-lg'>
 					© 2023 Almost Done
 				</p>
 			</footer>
