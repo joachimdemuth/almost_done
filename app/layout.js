@@ -1,5 +1,5 @@
 import '../styles/globals.css';
-
+import { Analytics } from '@vercel/analytics/react'
 export const metadata = {
 	title: 'Almost Done',
 	description: 'Photo gallery',
@@ -26,7 +26,9 @@ export default function RootLayout({ children }) {
 
 				
 			</head>
-			<body className='font-body'>{children}</body>
+			<body className='font-body'>{children}
+			<Analytics />
+			</body>
 		</html>
 	);
 }

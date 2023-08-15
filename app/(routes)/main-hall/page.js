@@ -263,6 +263,7 @@ export default function MainHall() {
 									className='object-contain p-1'
 									alt={image?.desc}
 									src={baseUrl + image?.file_path}
+									quality={100}
 								/>
 							</div>
 						);
