@@ -126,7 +126,7 @@ export default function Home() {
 					</div>
 				</Link>
 			</div>
-			<footer className='flex fixed bottom-0 left-0 w-full box-border py-4 lg:justify-start justify-center items-center'>
+			<footer className='flex fixed lg:px-20 max-lg:px-6 bottom-0 left-0 w-full box-border py-4 lg:justify-start justify-center items-center'>
 				<p className='text-center text-primary-lime-green font-display font-bold text-lg'>
 					© 2023 Almost Done
 				</p>
