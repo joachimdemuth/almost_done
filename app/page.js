@@ -8,6 +8,19 @@ import Link from 'next/link';
 import '../styles/globals.css';
 
 
+const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+
+
 export default function Home() {
 	const [device, setDevice] = useState('horizontal');
 
@@ -16,16 +29,15 @@ export default function Home() {
 
 
 	useEffect(() => {
-		const handleResize = () => {
-			setDevice(checkDevice());
-			
+        const handleResize = debounce(() => {
+            setDevice(checkDevice());
+        }, 100);
 
-		};
+        window.addEventListener('resize', handleResize);
 
-		window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
 
 	useEffect(() => {
 		setDevice(checkDevice());
