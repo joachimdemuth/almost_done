@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState, useEffect, useRef } from 'react';
 
 import Masonry from 'react-masonry-css';
@@ -9,7 +9,6 @@ import ArrowRight from '../../_assets/icons/Arrow_right.svg';
 import Close from '../../_assets/icons/Close.svg';
 var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 import { supabase } from '../../_utils/supabase';
-
 
 const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_BASE_URL;
 const mapboxToken =
@@ -22,6 +21,9 @@ export default function MainHall() {
 	const [isMapShowing, setIsMapShowing] = useState(false);
 	const [currentCoords, setCurrentCoords] = useState({});
 	const [device, setDevice] = useState('');
+	const [allKeywords, setAllKeywords] = useState([]);
+	const [currentKeyword, setCurrentKeyword] = useState('');
+	const [scrollPosition, setScrollPosition] = useState(0);
 
 	const bottomBarRef = useRef(null);
 	const mapContainer = useRef(null);
@@ -32,17 +34,50 @@ export default function MainHall() {
 
 	useEffect(() => {
 		const fetchImages = async () => {
-		const { data, error } = await supabase.from('images_metadata').select('*');
-	if (error) {
-		console.error('error fetching images: ', error);
-	} else {
-		setAllImages(data);
-	}
+			const { data, error } = await supabase
+				.from('images_metadata')
+				.select('*');
+			if (error) {
+				console.error('error fetching images: ', error);
+			} else {
+				setAllImages(data);
+			}
 		};
 
+		const fetchKeywords = async () => {
+			const { data, error } = await supabase.from('keywords').select('*');
+			if (error) {
+				console.error('error fetching keywords: ', error);
+			} else {
+				setAllKeywords(data);
+			}
+		};
+
+		fetchKeywords();
 		fetchImages();
 	}, []);
 
+	useEffect(() => {
+		if (isLightboxOpen) {
+			document.addEventListener('keydown', handleKeyDown);
+		}
+
+		return () => document.removeEventListener('keydown', handleKeyDown);
+	}, [isLightboxOpen]);
+
+	const handleKeyDown = (e) => {
+		if (e.key === 'ArrowRight') {
+			handleNext();
+		}
+
+		if (e.key === 'ArrowLeft') {
+			handlePrevious();
+		}
+
+		if (e.key === 'Escape') {
+			handleCloseLightbox();
+		}
+	};
 
 	useEffect(() => {
 		setDevice(checkDevice());
@@ -64,9 +99,9 @@ export default function MainHall() {
 		}
 	};
 
-
 	const handleOpenLightbox = (id) => {
-		if(device === 'vertical') return;
+		setScrollPosition(window.scrollY);
+		if (device === 'vertical') return;
 		setCurrentImageIndex(id);
 		setCurrentCoords(allImages[id].coords);
 
@@ -83,6 +118,7 @@ export default function MainHall() {
 		);
 		setIsMapShowing(false);
 		setIsLightboxOpen(false);
+		window.scrollTo(0, scrollPosition);
 	};
 
 	const toggleMap = () => {
@@ -121,7 +157,6 @@ export default function MainHall() {
 
 	const moveMarkerTo = () => {
 		if (!marker) {
-
 			return;
 		}
 
@@ -241,45 +276,73 @@ export default function MainHall() {
 					</svg>
 				</Link>
 			</div>
+
+			<div className='flex w-full flex-row gap-2 px-20'>
+				{allKeywords &&
+					[...allKeywords]
+						.sort((a, b) => (a.keyword === currentKeyword ? -1 : 1))
+						.map((keyword, index) => {
+							if (keyword.keyword === currentKeyword)
+								return (
+									<div
+										key={index}
+										onClick={() => setCurrentKeyword('')}
+										className='px-2 py-1 border-[1px] border-primary-blue rounded-full bg-primary-blue text-primary-white cursor-pointer'
+									>
+										<p className='text-xs'>{keyword.keyword}</p>
+									</div>
+								);
+
+							return (
+								<div
+									key={index}
+									onClick={() => setCurrentKeyword(keyword.keyword)}
+									className='px-2 py-1 border-[1px] border-primary-blue rounded-full text-primary-blue hover:bg-primary-blue hover:text-primary-white cursor-pointer'
+								>
+									<p className=' text-xs '>{keyword.keyword}</p>
+								</div>
+							);
+						})}
+			</div>
 			<div className='xl:w-full w-full pt-4 px-6 flex flex-wrap md:px-20 xl:px-80 justify-between items-center '>
-
-
-					<Masonry
+				<Masonry
 					breakpointCols={device === 'horizontal' ? 3 : 1}
 					ref={gridRef}
 					id='grid'
 					className='flex w-full justify-center items-start '
-					>
-					{allImages.map((image, index) => {
-						
-						
-						return (
-							<div
-							onClick={() => handleOpenLightbox(index)}
-							key={index}
-							id='grid-item'
-							className='flex-1 w-full xl:max-w-[800px] hover:cursor-pointer'
-							>
-								<Image
-									width={image.width}
-									height={image.height}
-									className='object-contain p-1'
-									alt={image?.desc}
-									src={baseUrl + image?.file_path}
-									quality={100}
+				>
+					{allImages
+						.filter(
+							(image) =>
+								!currentKeyword ||
+								(image.keywords && image.keywords.includes(currentKeyword)),
+						)
+						.map((image, index) => {
+							return (
+								<div
+									onClick={() => handleOpenLightbox(index)}
+									key={index}
+									id='grid-item'
+									className='flex-1 w-full xl:max-w-[800px] hover:cursor-pointer'
+								>
+									<Image
+										width={image.width}
+										height={image.height}
+										className='object-contain p-1'
+										alt={image?.desc}
+										src={baseUrl + image?.file_path}
+										quality={100}
 									/>
-							</div>
-						);
-					})}
-
+								</div>
+							);
+						})}
 				</Masonry>
-
 			</div>
 			{isLightboxOpen && (
 				<div className='fixed justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
 					<div className='flex h-full'>
 						<div className=' z-10 lg:w-[64px] lg:h-[64px] w-[24px] h-[24px] rounded-full fixed lg:top-12 lg:right-12 top-6 right-6 flex justify-center items-center cursor-pointer scale-75 hover:scale-100 transition-transform'>
-							<Image onClick={handleCloseLightbox} alt="Close" src={Close} />
+							<Image onClick={handleCloseLightbox} alt='Close' src={Close} />
 						</div>
 						{/* FULL SIZE IMAGE */}
 						<div className='flex relative bg-text-black justify-center items-center  w-full'>
@@ -321,7 +384,7 @@ export default function MainHall() {
 									onClick={handlePrevious}
 									className='py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
 								>
-									<Image alt="Previous" src={ArrowLeft} />
+									<Image alt='Previous' src={ArrowLeft} />
 								</div>
 								<p>
 									{currentImageIndex + 1}/{allImages.length}
@@ -331,7 +394,7 @@ export default function MainHall() {
 									onClick={handleNext}
 									className=' py-2 px-4 cursor-pointer hover:translate-x-1 transition-transform'
 								>
-									<Image alt="Next" src={ArrowRight} />
+									<Image alt='Next' src={ArrowRight} />
 								</div>
 							</div>
 							<div className='flex justify-center items-end gap-2 w-1/3 flex-col'>
@@ -364,4 +427,3 @@ export default function MainHall() {
 		</div>
 	);
 }
-

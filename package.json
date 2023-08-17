@@ -11,6 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mapbox/search-js-react": "^1.0.0-beta.17",
+    "@mapbox/search-js-web": "^1.0.0-beta.17",
     "@mui/material": "^5.14.4",
     "@supabase/auth-helpers-nextjs": "^0.7.4",
     "@supabase/auth-helpers-react": "^0.4.2",
@@ -39,6 +41,7 @@
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "sharp": "^0.32.4",
+    "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
   "eslintConfig": {
