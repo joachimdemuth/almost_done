@@ -277,34 +277,39 @@ export default function MainHall() {
 				</Link>
 			</div>
 
-			<div className='flex w-full flex-row gap-2 px-20'>
+			<div className='xl:w-full w-full pt-4 px-6 flex gap-6 flex-wrap md:px-20 xl:px-80 justify-between items-center '>
+			<div className='flex w-full flex-row gap-2 overflow-hidden overflow-x-scroll scroll-smooth no-scrollbar'>
 				{allKeywords &&
 					[...allKeywords]
-						.sort((a, b) => (a.keyword === currentKeyword ? -1 : 1))
+						.sort((a, b) => {
+							if (a.keyword === currentKeyword) return -1;
+							if (b.keyword === currentKeyword) return 1;
+							return b.count - a.count;
+						})
+						.slice(0, 10)
 						.map((keyword, index) => {
 							if (keyword.keyword === currentKeyword)
 								return (
 									<div
 										key={index}
 										onClick={() => setCurrentKeyword('')}
-										className='px-2 py-1 border-[1px] border-primary-blue rounded-full bg-primary-blue text-primary-white cursor-pointer'
+										className='px-4 py-2 border-[1px] border-primary-blue text-center rounded-full bg-primary-blue text-primary-white cursor-pointer'
 									>
-										<p className='text-xs'>{keyword.keyword}</p>
+										<p className='text-sm'>{keyword.keyword}</p>
 									</div>
 								);
-
+							
 							return (
 								<div
 									key={index}
 									onClick={() => setCurrentKeyword(keyword.keyword)}
-									className='px-2 py-1 border-[1px] border-primary-blue rounded-full text-primary-blue hover:bg-primary-blue hover:text-primary-white cursor-pointer'
+									className='px-4 py-2 border-[1px] border-primary-blue text-center rounded-full text-primary-blue hover:bg-[#cfe0ff]  cursor-pointer'
 								>
-									<p className=' text-xs '>{keyword.keyword}</p>
+									<p className=' text-sm '>{keyword.keyword}</p>
 								</div>
 							);
 						})}
 			</div>
-			<div className='xl:w-full w-full pt-4 px-6 flex flex-wrap md:px-20 xl:px-80 justify-between items-center '>
 				<Masonry
 					breakpointCols={device === 'horizontal' ? 3 : 1}
 					ref={gridRef}
@@ -399,16 +404,18 @@ export default function MainHall() {
 							</div>
 							<div className='flex justify-center items-end gap-2 w-1/3 flex-col'>
 								<p className=' text-sm font-bold'>
-									{allImages[currentImageIndex].coords.lng +
+									{allImages[currentImageIndex].coords.lat +
 										', ' +
-										allImages[currentImageIndex].coords.lat}
+										allImages[currentImageIndex].coords.lng}
 								</p>
-								{/* <p
-									onClick={toggleMap}
+								<Link href={`https://www.google.com/maps/search/?api=1&query=${allImages[currentImageIndex].coords.lat},${allImages[currentImageIndex].coords.lng}`} target='_blank'>
+								<p
+
 									className=' hover:font-bold text-xs underline text-blue-500 text-center hover:cursor-pointer font-display hover:underline'
 								>
-									{isMapShowing ? 'Close map' : 'Show on map'}
-								</p> */}
+									Show on map
+								</p>
+								</Link>
 							</div>
 						</div>
 						{/* MAP */}
