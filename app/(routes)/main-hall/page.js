@@ -239,6 +239,8 @@ export default function MainHall() {
 		}
 	};
 
+	
+
 	return (
 		<div className='flex flex-col justify-start w-full max-w-full items-center min-h-screen'>
 			<div className=' bg-white flex w-full px-6 h-16 lg:px-20 lg:h-24 lg:justify-start justify-center items-center'>
@@ -310,6 +312,7 @@ export default function MainHall() {
 							);
 						})}
 			</div>
+
 				<Masonry
 					breakpointCols={device === 'horizontal' ? 3 : 1}
 					ref={gridRef}

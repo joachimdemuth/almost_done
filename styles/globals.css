@@ -1,8 +1,18 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import url('https://fonts.cdnfonts.com/css/tasa-orbiter-display');
-@import url('https://fonts.cdnfonts.com/css/tasa-explorer');
+
+@font-face {
+  font-family: 'TASA Orbiter Display';
+  src: url('../app/_assets/fonts/TASAOrbiterVF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: 'TASA Explorer';
+  src: url('../app/_assets/fonts/TASAExplorerVF.woff2') format('woff2-variations');
+  font-weight: 100 900;
+}
+
 
 
 @layer utilities {
@@ -16,13 +26,40 @@
       scrollbar-width: none;
     }
   }
+  .font-thin {
+    font-variation-settings: 'wght' 100;
+}
+.font-extralight {
+    font-variation-settings: 'wght' 200;
+}
+.font-light {
+    font-variation-settings: 'wght' 300;
+}
+.font-normal {
+    font-variation-settings: 'wght' 400;
+}
+.font-medium {
+    font-variation-settings: 'wght' 500;
+}
+.font-semibold {
+    font-variation-settings: 'wght' 600;
+}
+.font-bold {
+    font-variation-settings: 'wght' 700;
+}
+.font-extrabold {
+    font-variation-settings: 'wght' 800;
+}
+.font-black {
+    font-variation-settings: 'wght' 900;
+}
 }
 
 
 body {
   display: flex;
   margin: 0;
-  font-family: 'tasa-explorer';
+  font-family: 'TASA Explorer', sans-serif;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
