@@ -117,7 +117,7 @@ export default function Home() {
 			</div>
 			<div className='z-10 flex fixed flex-col w-full lg:px-20 min-h-screen max-lg:bottom-16  justify-end items-center pb-20'>
 				<Link href='/main-hall'>
-					<div className='flex px-4 py-6  items-center gap-2 border-4 rounded-full  border-primary-lime-green hover:animate-[prolong_0.2s_ease-in-out_forwards]'>
+					<div className='flex px-4 py-6  items-center gap-2 border-4 rounded-full border-primary-lime-green hover:animate-[prolong_0.2s_ease-in-forwards]'>
 						<div className='flex items-center'>
 							<p className=' text-lg font-bold font-display leading-normal text-primary-lime-green'>
 								Go to gallery
