@@ -280,7 +280,9 @@ export default function MainHall() {
 			</div>
 
 			<div className='xl:w-full w-full pt-4 px-6 flex gap-6 flex-wrap md:px-20 xl:px-80 justify-between items-center '>
-			<div className='flex w-full flex-row gap-2 overflow-hidden overflow-x-scroll scroll-smooth no-scrollbar'>
+				{/* KEYWORD SECTION */}
+
+			<div className='hidden w-full lg:flex flex-row gap-2 overflow-hidden overflow-x-scroll scroll-smooth no-scrollbar'>
 				{allKeywords &&
 					[...allKeywords]
 						.sort((a, b) => {
