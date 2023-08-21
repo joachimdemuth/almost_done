@@ -3,81 +3,78 @@
 @import 'tailwindcss/utilities';
 
 @font-face {
-  font-family: 'TASA Orbiter Display';
-  src: url('../app/_assets/fonts/TASAOrbiterVF.woff2') format('woff2-variations');
-  font-weight: 100 900;
+	font-family: 'TASA Orbiter Display';
+	src: url('../app/_assets/fonts/TASAOrbiterVF.woff2')
+		format('woff2-variations');
+	font-weight: 100 900;
 }
 @font-face {
-  font-family: 'TASA Explorer';
-  src: url('../app/_assets/fonts/TASAExplorerVF.woff2') format('woff2-variations');
-  font-weight: 100 900;
+	font-family: 'TASA Explorer';
+	src: url('../app/_assets/fonts/TASAExplorerVF.woff2')
+		format('woff2-variations');
+	font-weight: 100 900;
 }
-
-
 
 @layer utilities {
-  @variants responsive {
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
 
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-  }
-  .font-thin {
-    font-variation-settings: 'wght' 100;
-}
-.font-extralight {
-    font-variation-settings: 'wght' 200;
-}
-.font-light {
-    font-variation-settings: 'wght' 300;
-}
-.font-normal {
-    font-variation-settings: 'wght' 400;
-}
-.font-medium {
-    font-variation-settings: 'wght' 500;
-}
-.font-semibold {
-    font-variation-settings: 'wght' 600;
-}
-.font-bold {
-    font-variation-settings: 'wght' 700;
-}
-.font-extrabold {
-    font-variation-settings: 'wght' 800;
-}
-.font-black {
-    font-variation-settings: 'wght' 900;
-}
-}
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
 
+	.font-thin {
+		font-variation-settings: 'wght' 100;
+	}
+	.font-extralight {
+		font-variation-settings: 'wght' 200;
+	}
+	.font-light {
+		font-variation-settings: 'wght' 300;
+	}
+	.font-normal {
+		font-variation-settings: 'wght' 400;
+	}
+	.font-medium {
+		font-variation-settings: 'wght' 500;
+	}
+	.font-semibold {
+		font-variation-settings: 'wght' 600;
+	}
+	.font-bold {
+		font-variation-settings: 'wght' 700;
+	}
+	.font-extrabold {
+		font-variation-settings: 'wght' 800;
+	}
+	.font-black {
+		font-variation-settings: 'wght' 900;
+	}
+}
 
 body {
-  display: flex;
-  margin: 0;
-  font-family: 'TASA Explorer', sans-serif;
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* min-width: 100vw;
+	display: flex;
+	margin: 0;
+	font-family: 'TASA Explorer', sans-serif;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	/* min-width: 100vw;
   min-height: 100vh; */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-
+	padding-top: env(safe-area-inset-top);
+	padding-bottom: env(safe-area-inset-bottom);
 }
 #root {
-  min-width: 100vw;
-  min-height: 100vh;
+	min-width: 100vw;
+	min-height: 100vh;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
 }
 #__next {
-  width: 100%;
-  box-sizing: border-box;
+	width: 100%;
+	box-sizing: border-box;
 }

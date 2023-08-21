@@ -297,7 +297,7 @@ export default function MainHall() {
 									<div
 										key={index}
 										onClick={() => setCurrentKeyword('')}
-										className='px-4 py-2 border-[1px] border-primary-blue text-center rounded-full bg-primary-blue text-primary-white cursor-pointer whitespace-nowrap'
+										className='px-4 py-2 border-[1px] border-primary-blue text-center rounded-full bg-primary-blue text-primary-white cursor-pointer'
 									>
 										<p className='text-sm font-display'>{keyword.keyword}</p>
 									</div>
