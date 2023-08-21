@@ -1,4 +1,4 @@
-'use client';
+   'use client';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InputField from '../../_components/InputField';
@@ -60,13 +60,14 @@ export default function Upload() {
 		setMap(mapInstance);
 
 		mapInstance.on('click', function (e) {
+
 			// If a marker already exists, remove it
 			if (currentMarker) {
 				currentMarker.remove();
 			}
-			console.log(e);
+
 			// Create a new marker
-			currentMarker = new mapboxgl.Marker().setLngLat(e.lngLat).addTo(map);
+			currentMarker = new mapboxgl.Marker().setLngLat(e.lngLat).addTo(mapInstance);
 			console.log(currentMarker);
 			setFormData((prevData) => ({ ...prevData, coords: e.lngLat }));
 		});
@@ -221,8 +222,11 @@ export default function Upload() {
 
 		suggestions.forEach((suggestion) => {
 			const div = document.createElement('div');
+			div.classList.add('hover:bg-primary-blue', 'px-1', 'py-1', 'rounded-[4px]', 'cursor-pointer');
 			div.innerHTML = suggestion.place_name;
 			div.onclick = () => {
+				document.getElementById('search-bar').value = suggestion.place_name;
+				container.innerHTML = '';
 				const [longitude, latitude] = suggestion.center;
 				if(map){
 
@@ -271,7 +275,7 @@ export default function Upload() {
 			{/* FORM CONTAINER */}
 			<div div className='flex w-full px-6 lg:py-12 lg:px-20 items-start'>
 				<form
-					className='flex w-full lg:flex-row max-lg:flex-col items-start gap-8 lg:gap-20'
+					className='flex w-full mb-10 lg:flex-row max-lg:flex-col items-start gap-8 lg:gap-20'
 					onSubmit={(e) => e.preventDefault()}
 				>
 					<div className='flex flex-col w-full gap-12 flex-1 items-center'>
@@ -321,10 +325,10 @@ export default function Upload() {
 							<div className='flex w-full flex-col items-end gap-1  text-primary-blue text-lg'>
 								{formData.coords.lng !== undefined ? (
 									<p className='font-display font-bold'>
-										{formData.coords.lng + ', ' + formData.coords.lat}
+										{formData.coords.lat.toString().substring(0,7) + ', ' + formData.coords.lng.toString().substring(0,7)}
 									</p>
 								) : (
-									<p className='font-display font-bold'>00.000000, 00.000000</p>
+									<p className='font-display font-bold'>00.0000, 00.0000</p>
 								)}
 
 								<p>{formData.camera ? formData.camera : 'Camera'}</p>
@@ -340,8 +344,8 @@ export default function Upload() {
 					</div>
 
 					<div className='flex flex-col justify-between items-start w-full flex-1'>
-						<div className='flex flex-col items-start gap-4 lg:gap-16 w-full'>
-							<div className='flex flex-col items-start gap-4 lg:gap-10 w-full'>
+						<div className='flex flex-col items-start gap-4 lg:gap-8 w-full'>
+							<div className='flex flex-col items-start gap-4 lg:gap-8 w-full'>
 								<div className='flex max-lg:flex-col items-start gap-4 w-full'>
 									<InputField
 										type='text'
@@ -400,11 +404,11 @@ export default function Upload() {
 									id='search-bar'
 									placeholder='Search location...'
 									onChange={(e) => fetchSuggestions(e.target.value)}
-									className='bg-gray-100 border-2 border-gray-300 rounded-[4px] h-12 px-2 w-full'
+									className='bg-gray-100 text-lg border-2 border-gray-300 rounded-[4px] h-12 px-2 w-full placeholder:text-gray-400'
 								/>
 								<div
 									id='suggestions-container'
-									className='flex flex-col gap-2 border-2 bg-gray-100 border-gray-300 px-2 py-2 rounded-[4px]'
+									className={`flex empty:hidden flex-col top-40 gap-2 border-2 bg-gray-100 border-gray-300 px-2 py-2 rounded-[4px] z-20 [&>p]:hover:bg-gray-200 [&>p]hover:cursor-pointer`}
 								></div>
 							</div>
 							<div

@@ -349,22 +349,22 @@ export default function MainHall() {
 				</Masonry>
 			</div>
 			{isLightboxOpen && (
-				<div className='fixed justify-startitems-start flex-col top-0 left-0 w-full h-full bg-white flex'>
-					<div className='flex h-full'>
+				<div className='fixed justify-start items-start flex-col min-h-screen top-0 bg-primary-white left-0 w-full bg-white flex'>
+					<div className='flex self-stretch w-full bg-slate-900 flex-col justify-start items-start gap-2' >
 						<div className=' z-10 lg:w-[64px] lg:h-[64px] w-[24px] h-[24px] rounded-full fixed lg:top-12 lg:right-12 top-6 right-6 flex justify-center items-center cursor-pointer scale-75 hover:scale-100 transition-transform'>
 							<Image onClick={handleCloseLightbox} alt='Close' src={Close} />
 						</div>
 						{/* FULL SIZE IMAGE */}
-						<div className='flex relative bg-text-black justify-center items-center  w-full'>
+
 							<Image
 								priority
 								width={allImages[currentImageIndex]?.width}
 								height={allImages[currentImageIndex]?.height}
-								className='object-contain max-h-screen'
+								className='self-stretch grow shrink basis-0'
 								src={baseUrl + allImages[currentImageIndex]?.file_path}
 								alt={allImages[currentImageIndex]?.desc}
 							/>
-						</div>
+
 					</div>
 
 					{/* BOTTOM BAR */}
