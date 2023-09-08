@@ -52,7 +52,7 @@ export default function Gallery() {
 	}, [showOverlay]);
 
 	const openImage = (index, event) => {
-console.log(index)
+
 
 		const rect = event.target.getBoundingClientRect();
 		setPosition({
