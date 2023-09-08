@@ -23,11 +23,11 @@ export default function RootLayout({ children }) {
 					content='width=device-width, initial-scale=1.0'
 				></meta>
 
-				<meta name='theme-color' content='#FFFFFF'></meta>
+				<meta name='theme-color' content='#DBEEFF'></meta>
 
 				
 			</head>
-			<body className='font-body flex flex-col'>
+			<body className='font-body flex flex-col bg-[#DBEEFF]'>
 				{children}
 				{/* <footer className='flex z-10 lg:px-20 max-lg:px-6 bottom-0 left-0 w-full box-border py-10 lg:justify-start justify-center items-center'>
 				<p className='text-center text-primary-lime-green font-display font-bold text-md md:text-lg'>
