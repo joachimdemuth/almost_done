@@ -46,7 +46,10 @@ module.exports = {
 			},
 			transitionTimingFunction: {
 				'logo' : 'cubic-bezier(.13,.84,1,1)'
-			}
+			},
+			cursor: {
+				'left-arrow': 'url(./app/_assets/cursor/leftArrow.svg) 16 16, auto',
+			},
 		},
 	},
 	plugins: [],

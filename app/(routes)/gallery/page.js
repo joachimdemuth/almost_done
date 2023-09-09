@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, use } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-
+import './page.css';
 import { supabase } from '../../_utils/supabase';
 
 const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_BASE_URL;
@@ -15,7 +15,7 @@ export default function Gallery() {
 	const [position, setPosition] = useState({});
 	const [clickedImage, setClickedImage] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
-
+    const [cursorSide, setCursorSide] = useState('');
 	const overlayRef = useRef(null);
 	const imageContainer = useRef(null);
 
@@ -66,7 +66,7 @@ export default function Gallery() {
 	};
 
 	const changeImage = (e) => {
-		console.log('change image');
+
 		// measure if the click is on the left or right half of the image
 		const rect = e.target.getBoundingClientRect();
 		const x = e.clientX - rect.left;
@@ -104,11 +104,25 @@ export default function Gallery() {
 	};
 
 	const handleOnImageClick = (index, e) => {
-        if(clickedImage === index) {
-            setClickedImage(null);
-        } else {
-            setClickedImage(index);
-        }
+		if (clickedImage === index) {
+			setClickedImage(null);
+		} else {
+			setClickedImage(index);
+		}
+	};
+
+	const handleMouseMovement = (e) => {
+        const container = overlayRef.current.childNodes[1];
+    const rect = container.getBoundingClientRect();
+    const mousePositionRelativeToContainer = e.clientX - rect.left;
+
+    if (mousePositionRelativeToContainer < rect.width / 2) {
+        container.classList.remove("right-cursor");
+        container.classList.add("left-cursor");
+    } else {
+        container.classList.remove("left-cursor");
+        container.classList.add("right-cursor");
+    }
 	};
 
 	return (
@@ -131,14 +145,11 @@ export default function Gallery() {
 						return (
 							<div
 								onClick={(e) => {
-                                    if(window.innerWidth < 768) {
-
-                                        handleOnImageClick(index, e);
-                                    }
-                                    else {
-                                        openImage(index, e);
-                                    }
-									
+									if (window.innerWidth < 768) {
+										handleOnImageClick(index, e);
+									} else {
+										openImage(index, e);
+									}
 								}}
 								key={index}
 								className={`
@@ -152,7 +163,7 @@ export default function Gallery() {
 									src={baseUrl + image?.file_path}
 									alt={image?.desc}
 									className='w-full h-full object-cover lg:transition-all lg:duration-1000 lg:ease-in'
-                                    fill
+									fill
 									sizes='(max-width: 768px) 100vw, 768px'
 								/>
 							</div>
@@ -162,8 +173,11 @@ export default function Gallery() {
 			)}
 			{showOverlay && (
 				<div
+					onMouseMove={(e) => {
+						handleMouseMovement(e);
+					}}
 					ref={overlayRef}
-					className=' bg-[#DBEEFF] bg-opacity-70 z-20 backdrop-blur-lg transition-all w-full h-screen transform duration-300 top-0 left-0 fixed'
+					className={` bg-[#DBEEFF] bg-opacity-70 z-20 backdrop-blur-lg transition-all w-full h-screen transform duration-300 top-0 left-0 fixed ${cursorSide === "left" ? 'left-cursor' : 'right-cursor'} `}
 				>
 					<div
 						onClick={closeOverlay}
@@ -189,7 +203,7 @@ export default function Gallery() {
 						alt={allImages[currentIndex]?.desc}
 						onClick={changeImage}
 						className='w-full h-full object-contain'
-						layout='fill'
+						fill
 					/>
 				</div>
 			)}
