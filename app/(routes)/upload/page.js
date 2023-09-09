@@ -5,7 +5,7 @@ import InputField from '../../_components/InputField';
 import ComboBox from '../../_components/ComboBox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import LeftArrow from '../../_assets/icons/Arrow_left.svg';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Link from 'next/link';
 import { handleImageCompression } from '../../_lib/imageCompression';
 import { useRouter } from 'next/navigation';

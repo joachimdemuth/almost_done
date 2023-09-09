@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import { supabase } from '../../_utils/supabase';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import bg from '../../_assets/bg_image/italy-18.webp'
 
 

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import bgHoriz from './_assets/bg_image/italy-35.jpg';
 import bgVert from './_assets/bg_image/italy-24.jpg';
 import tailwindConfig from '../tailwind.config.js'

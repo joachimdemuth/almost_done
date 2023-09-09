@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import Masonry from 'react-masonry-css';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Link from 'next/link';
 import ArrowLeft from '../../_assets/icons/Arrow_left.svg';
 import ArrowRight from '../../_assets/icons/Arrow_right.svg';

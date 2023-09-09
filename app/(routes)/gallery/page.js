@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, use } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import Close from '../../_assets/icons/Close.svg';
+
 import { supabase } from '../../_utils/supabase';
 
 const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_BASE_URL;
@@ -49,7 +49,7 @@ export default function Gallery() {
 				img.style.left = '0';
 				img.style.width = '100vw';
 				img.style.height = '100vh';
-			}, 10);
+			}, 1);
 		}
 	}, [showOverlay]);
 
@@ -65,13 +65,37 @@ export default function Gallery() {
 		setShowOverlay(true);
 	};
 
-	const nextImage = () => {
-		if (currentIndex < allImages.length - 1) {
-			setCurrentIndex(currentIndex + 1);
+	const changeImage = (e) => {
+		console.log('change image');
+		// measure if the click is on the left or right half of the image
+		const rect = e.target.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+		const halfWidth = rect.width / 2;
+		const halfHeight = rect.height / 2;
+		const isLeft = x < halfWidth;
+		const isTop = y < halfHeight;
+
+		// if the click is on the left half of the image, go to the previous image
+		if (isLeft) {
+			if (currentIndex > 0) {
+				setCurrentIndex(currentIndex - 1);
+			}
+
+			if (currentIndex === 0) {
+				setCurrentIndex(allImages.length - 1);
+			}
 		}
 
-		if (currentIndex === allImages.length - 1) {
-			setCurrentIndex(0);
+		// if the click is on the right half of the image, go to the next image
+		if (!isLeft) {
+			if (currentIndex < allImages.length - 1) {
+				setCurrentIndex(currentIndex + 1);
+			}
+
+			if (currentIndex === allImages.length - 1) {
+				setCurrentIndex(0);
+			}
 		}
 	};
 
@@ -80,8 +104,11 @@ export default function Gallery() {
 	};
 
 	const handleOnImageClick = (index, e) => {
-		setClickedImage(index);
-		const container = e.target.parentNode;
+        if(clickedImage === index) {
+            setClickedImage(null);
+        } else {
+            setClickedImage(index);
+        }
 	};
 
 	return (
@@ -102,50 +129,42 @@ export default function Gallery() {
 				>
 					{allImages.map((image, index) => {
 						return (
-							<>
-                            {/* // MOBILE LAYOUT */}
-								<div
-									onClick={(e) => handleOnImageClick(index, e)}
-                                    key={index}
-									className={`flex lg:hidden w-full ${
-										clickedImage === index ? ' h-72' : 'h-16'
-									} relative justify-start items-start overflow-hidden transform transition-all duration-300`}
-								>
-									<Image
-										src={baseUrl + image?.file_path}
-										alt={image?.desc}
-                                        className='w-full h-full object-cover'
+							<div
+								onClick={(e) => {
+                                    if(window.innerWidth < 768) {
 
-										placeholder='blur'
-										blurDataURL='iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkWP+/HgAElAIv6Q4JJwAAAABJRU5ErkJggg=='
-										sizes='(max-width: 768px) 100vw, 768px'
-									/>
-								</div>
-
-                            {/* // DESKTOP LAYOUT */}
-
-								<div
-									ref={imageContainer}
-									key={"d" + index}
-									onClick={(e) => openImage(index, e)}
-									className='hidden md:flex md:w-1/12  relative justify-start items-start overflow-hidden md:h-full transform transition-all duration-300 hover:w-3/4 hover:cursor-pointer'
-								>
-									<Image
-										src={baseUrl + image?.file_path}
-										alt={image?.desc}
-                                        className='w-full h-full object-cover'
-										placeholder='blur'
-										blurDataURL='iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkWP+/HgAElAIv6Q4JJwAAAABJRU5ErkJggg=='
-										sizes='(max-width: 768px) 100vw, 768px'
-									/>
-								</div>
-							</>
+                                        handleOnImageClick(index, e);
+                                    }
+                                    else {
+                                        openImage(index, e);
+                                    }
+									
+								}}
+								key={index}
+								className={`
+                flex relative justify-start items-center overflow-hidden 
+                 transition-all duration-300
+                    w-full lg:w-1/12 lg:hover:w-3/4 hover:cursor-pointer
+                ${clickedImage === index ? 'h-72' : 'h-16'}
+            `}
+							>
+								<Image
+									src={baseUrl + image?.file_path}
+									alt={image?.desc}
+									className='w-full h-full object-cover lg:transition-all lg:duration-1000 lg:ease-in'
+                                    fill
+									sizes='(max-width: 768px) 100vw, 768px'
+								/>
+							</div>
 						);
 					})}
 				</div>
 			)}
 			{showOverlay && (
-				<div className='overlay bg-[#DBEEFF] bg-opacity-70 z-20 backdrop-blur-lg transition-all w-full h-screen transform duration-300 top-0 left-0 fixed'>
+				<div
+					ref={overlayRef}
+					className=' bg-[#DBEEFF] bg-opacity-70 z-20 backdrop-blur-lg transition-all w-full h-screen transform duration-300 top-0 left-0 fixed'
+				>
 					<div
 						onClick={closeOverlay}
 						className='w-6 h-6 hover:cursor-pointer z-30 fixed right-16 top-16 text-primary-white'
@@ -158,23 +177,19 @@ export default function Gallery() {
 							xmlns='http://www.w3.org/2000/svg'
 						>
 							<path
-								fill-rule='evenodd'
-								clip-rule='evenodd'
+								fillRule='evenodd'
+								clipRule='evenodd'
 								d='M5.58579 8.41421C4.80474 7.63317 4.80474 6.36684 5.58579 5.58579C6.36684 4.80474 7.63317 4.80474 8.41421 5.58579L20 17.1716L31.5858 5.58579C32.3668 4.80474 33.6332 4.80474 34.4142 5.58579C35.1953 6.36684 35.1953 7.63317 34.4142 8.41421L22.8284 20L34.4142 31.5858C35.1953 32.3668 35.1953 33.6332 34.4142 34.4142C33.6332 35.1953 32.3668 35.1953 31.5858 34.4142L20 22.8284L8.41421 34.4142C7.63317 35.1953 6.36684 35.1953 5.58579 34.4142C4.80474 33.6332 4.80474 32.3668 5.58579 31.5858L17.1716 20L5.58579 8.41421Z'
 								fill='#005CFF'
 							/>
 						</svg>
 					</div>
 					<Image
-						ref={overlayRef}
 						src={baseUrl + allImages[currentIndex]?.file_path}
 						alt={allImages[currentIndex]?.desc}
-						onClick={nextImage}
-                        className='w-full h-full object-contain'
-
-						placeholder='blue'
-						blurDataURL='iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkWP+/HgAElAIv6Q4JJwAAAABJRU5ErkJggg=='
-						sizes='(max-width: 768px) 100vw, 768px'
+						onClick={changeImage}
+						className='w-full h-full object-contain'
+						layout='fill'
 					/>
 				</div>
 			)}
