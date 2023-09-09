@@ -14,8 +14,8 @@ module.exports = {
 		},
 		colors: {
 			'primary-blue': '#005CFF',
+			'light-blue' : '#DBEEFF',
 			'button-hover': '#0045bbff',
-			'primary-lime-green': '#52FF00',
 			'gray-100': '#F3F4F6',
 			'gray-300': '#CBCBCB',
 			'gray-400': '#BEBEBE',
@@ -29,6 +29,7 @@ module.exports = {
 			},
 			animation: {
 				prolong: 'prolong 0.2s ease-in-out both',
+				logoAnimation: 'logo-animation 0.3s ease-in',
 
 			},
 			keyframes: {
@@ -36,8 +37,16 @@ module.exports = {
 					'0%': { borderRadius: '50px', background: 'transparent' },
 					'100%': { borderRadius: '8px', background: '#52ff0050' },
 				},
+				logoAnimation: {
+					'0%': { transform: 'scale(0.6)',   },
+					'100%': { transform: 'scale(1)',  },
+				},
+
 			
 			},
+			transitionTimingFunction: {
+				'logo' : 'cubic-bezier(.13,.84,1,1)'
+			}
 		},
 	},
 	plugins: [],
