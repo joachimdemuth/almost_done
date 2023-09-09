@@ -144,7 +144,7 @@ export default function Gallery() {
 								className={`
                 flex relative justify-start items-center overflow-hidden 
                  transition-all duration-300
-                    w-full lg:w-1/12 lg:hover:w-3/4 hover:cursor-pointer
+                    w-full lg:w-1/12 lg:hover:w-3/4 hover:cursor-pointer lg:h-[650px]
                 ${clickedImage === index ? 'h-72' : 'h-16'}
             `}
 							>
