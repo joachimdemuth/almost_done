@@ -78,3 +78,13 @@ code {
 	width: 100%;
 	box-sizing: border-box;
 }
+
+
+.left-cursor {
+    cursor: url('../app/_assets/cursor/leftArrow.svg') 16 16, auto;
+}
+
+.right-cursor {
+    cursor: url('../app/_assets/cursor/rightArrow.svg') 16 16, auto;
+}
+
