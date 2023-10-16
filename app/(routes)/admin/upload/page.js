@@ -1,19 +1,18 @@
    'use client';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import InputField from '../../_components/InputField';
-import ComboBox from '../../_components/ComboBox';
+import InputField from '../../../_components/InputField'
+import ComboBox from '../../../_components/ComboBox';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import LeftArrow from '../../_assets/icons/Arrow_left.svg';
+import LeftArrow from '../../../_assets/icons/Arrow_left.svg';
 import Image from "next/legacy/image";
 import Link from 'next/link';
-import { handleImageCompression } from '../../_lib/imageCompression';
 import { useRouter } from 'next/navigation';
-import { supabase } from '../../_utils/supabase';
+import { supabase } from '../../../_utils/supabase';
 import KeywordsInput from './KeywordComponent';
 import Snackbar from '@mui/material/Snackbar';
-import checkDevice from '../../_lib/checkDevice';
-import { getImageDimensions } from '../../_lib/imageCompression';
+import checkDevice from '../../../_lib/checkDevice';
+import { getImageDimensions } from '../../../_lib/imageCompression';
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 const mapboxToken =
@@ -256,7 +255,7 @@ export default function Upload() {
 
 			<div className='flex w-full justify-between items-center flex-row px-6 py-6 lg:py-12 lg:px-20'>
 				<div className='flex w-1/3 items-center justify-start'>
-					<Link href='/main-hall'>
+					<Link href='/admin'>
 						<Image
 							width={checkDevice === false ? 64 : 48}
 							src={LeftArrow}
