@@ -76,14 +76,7 @@ return (
     <div className='flex w-full min-h-screen items-center flex-col'>
         {allImages.map((image) => (
             <ItemComponent key={image.id} item={image} handleDeleteItem={handleDeleteItem} />
-                // <div key={image.id} className='flex flex-row gap-4 items-center h-24 w-full px-8 border-b-2 border-gray-300 justify-between'>
-                //     <img src={baseUrl + image?.file_path} alt={image.title} className='w-[48px] h-[48px]' />
-                //     <h2>{image.title}</h2>
-                //     <p>{image.description}</p>
-                //     <p>{image.time_of_capture}</p>
-                //     <p>{image.coords.lat + " " + image.coords.lng}</p>
-                //     <p onClick={() => handleDeleteItem(image.id)} className=' text-gray-400 hover:text-primary-blue hover:cursor-pointer'>Delete</p>
-                // </div>
+          
         ))}
     </div>
     </div>

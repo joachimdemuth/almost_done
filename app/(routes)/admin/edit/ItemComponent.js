@@ -27,7 +27,7 @@ export default function ItemComponent({ item, handleDeleteItem }) {
             </div>
             <div className='flex flex-col gap-1 flex-1'>
             <p className='text-xs font-bold font-body text-primary-blue'>Description</p>
-			<p className='text-black text-md font-body'>{item.description}</p>
+			<p className='text-black text-md font-body'>{item.desc}</p>
             </div>
             <div className='flex flex-col gap-1 flex-1'>
             <p className='text-xs font-bold font-body text-primary-blue'>Date</p>
