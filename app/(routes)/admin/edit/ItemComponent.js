@@ -35,7 +35,7 @@ export default function ItemComponent({ item, handleDeleteItem }) {
             </div>
             <div className='flex flex-col gap-1 flex-1'>
             <p className='text-xs font-bold font-body text-primary-blue'>Coords</p>
-			<p className='text-black text-md font-body'>{item.coords.lat.toString().substring(0,7) + ', ' + item.coords.lng.toString().substring(0,7)}</p>
+			<p className='text-black text-md font-body'>{item.coords.lat?.toString().substring(0,7) + ', ' + item.coords.lng?.toString().substring(0,7)}</p>
             </div>
             </div>
 
