@@ -12,6 +12,8 @@ const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_BASE_URL;
 
 export default function Edit() {
 const [allImages, setAllImages] = useState([]);
+const [showPreview, setShowPreview] = useState(false);
+const [previewUrl, setPreviewUrl] = useState('');
     const router = useRouter();
 
 
@@ -52,6 +54,13 @@ const [allImages, setAllImages] = useState([]);
         setAllImages(allImages.filter(image => image.id !== id));
     }
 
+    const handleShowPreview = (id) => {
+        setShowPreview(!showPreview);
+
+        const url = allImages.find(image => image.id === id).file_path;
+        setPreviewUrl(baseUrl + url);
+    }
+
 return (
     <div className='flex w-full min-h-screen items-center justify-center flex-col gap-20'>
     {/* HEADER */}
@@ -75,11 +84,13 @@ return (
         </div>
     <div className='flex w-full min-h-screen items-center flex-col'>
         {allImages.map((image) => (
-            <ItemComponent key={image.id} item={image} handleDeleteItem={handleDeleteItem} />
+            <ItemComponent key={image.id} item={image} handleDeleteItem={handleDeleteItem} handleShowPreview={handleShowPreview} showPreview={showPreview} previewUrl={previewUrl} />
           
         ))}
     </div>
+    
     </div>
+
 )
 
 }
