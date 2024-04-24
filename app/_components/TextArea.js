@@ -5,7 +5,7 @@ const TextArea = ({ label, type, name, value, onChange }) => {
 		<div className=' w-full flex flex-col'>
 
 			<textarea
-				className= " resize-none h-12 items-center justify-center content-center flex bg-gray-100 border-2 border-gray-300 rounded-lg px-2"
+				className= " resize-none h-12 items-center justify-center content-center flex bg-gray-100 border-2 border-gray-300 rounded-lg px-2 text-md"
 				type={type}
 				id={name}
 				name={name}

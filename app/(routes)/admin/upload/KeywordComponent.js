@@ -32,7 +32,7 @@ function KeywordsInput({formData, setFormData}) {
                 onChange={e => setCurrentKeyword(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type a keyword and press Enter"
-                className="bg-gray-100 border-2 border-gray-300 px-4 rounded h-12 placeholder:text-gray-400"
+                className="bg-gray-100 border-2 border-gray-300 px-2 rounded h-12 placeholder:text-gray-400"
                 />
             {formData.keywords.length > 0 &&(
 

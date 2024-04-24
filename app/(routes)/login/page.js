@@ -24,7 +24,7 @@ if(data.user === null) {
     return;
 } 
 if(data.user.role === "authenticated") {
-    router.push('/upload')
+    router.push('/admin')
 }
 }
 checkAuth();
@@ -40,7 +40,7 @@ const handleSubmit = async (e) => {
       })
 
       if(data) {
-        router.push('/upload')
+        router.push('/admin')
       }
    
    
@@ -59,16 +59,16 @@ return (
   // a modern looking login form with email and password fields
 
   <div className="flex flex-row items-center justify-center w-full min-h-screen overflow-hidden">
-    <div className='flex h-screen flex-row overflow-hidden'> 
-    <Image className='flex-1 max-h-screen object-contain w-auto' src={bg} alt="background" width={2000}  />
+    <div className='flex flex-1 h-screen flex-row overflow-hidden'> 
+    <Image className='flex-1 max-h-screen object-contain w-auto' src={bg} alt="background" fill objectFit='cover' priority />
     </div>
 
 
-    <main className="flex bg-gray-100 h-screen flex-col items-center justify-center w-full flex-1 px-20 text-center">
-      <div className='flex flex-col bg-white p-20 box-border rounded-xl gap-12'>
+    <main className="flex box-border bg-light-blue h-screen flex-col items-center justify-center w-full flex-1 text-center">
+      <div className='flex flex-col bg-white p-8 box-border rounded-xl gap-12'>
       <div className='flex flex-col'>
 
-      <h1 className="xl:text-6xl lg:text-3xl font-bold">
+      <h1 className="xl:text-4xl text-primary-blue lg:text-3xl font-bold">
         Welcome to{' '}
         <span className="text-blue-600" >
           Almost Done
@@ -100,7 +100,7 @@ return (
           <button
             type="submit"
 
-            className="w-80 h-12 px-6 text-lg text-white transition duration-500 ease-in-out bg-blue-600 rounded-lg hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:shadow-outline"
+            className="w-80 h-12 px-6 text-lg text-primary-white transition duration-500 ease-in-out bg-primary-blue rounded-lg hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:shadow-outline"
           >
             Log in
           </button>

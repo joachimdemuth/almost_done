@@ -297,10 +297,10 @@ export default function Upload() {
 								</div>
 							) : (
 								<label
-									className='flex min-h-[200px] lg:min-h-[600px] justify-center items-center text-gray-400 border-2 border-gray-300 w-full bg-gray-100 rounded-lg'
+									className='flex min-h-[200px] lg:min-h-[600px] justify-center items-center text-gray-400 border-2 border-primary-blue bg-primary-blue-20 w-full rounded-lg'
 									htmlFor='image'
 								>
-									<p className='text-center text-gray-400 text-lg lg:text-2xl font-body'>
+									<p className='text-center text-primary-blue text-lg lg:text-2xl font-body'>
 										Drag and drop or click to select
 									</p>
 								</label>
@@ -380,7 +380,7 @@ export default function Upload() {
 									/>
 
 									<input
-										className='bg-gray-100 border-2 border-gray-300 rounded-[4px] h-12 px-2 w-full'
+										className='bg-gray-100 border-2 border-gray-300 rounded-[4px] h-12 px-2 text-md placeholder:text-gray-300 text-gray-300 w-full'
 										onChange={handleChange}
 										type='date'
 										name='date'
@@ -403,7 +403,7 @@ export default function Upload() {
 									id='search-bar'
 									placeholder='Search location...'
 									onChange={(e) => fetchSuggestions(e.target.value)}
-									className='bg-gray-100 text-lg border-2 border-gray-300 rounded-[4px] h-12 px-2 w-full placeholder:text-gray-400'
+									className='bg-gray-100 text-md border-2 border-gray-300 rounded-[4px] h-12 px-2 w-full placeholder:text-gray-400'
 								/>
 								<div
 									id='suggestions-container'

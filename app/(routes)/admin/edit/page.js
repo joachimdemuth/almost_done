@@ -82,8 +82,10 @@ return (
             </div>
             <div className='flex w-1/3'></div>
         </div>
-    <div className='flex w-full min-h-screen items-center flex-col'>
+    <div className='flex w-full min-h-screen justify-start items-center flex-col px-32'>
         {allImages.map((image) => (
+
+            
             <ItemComponent key={image.id} item={image} handleDeleteItem={handleDeleteItem} handleShowPreview={handleShowPreview} showPreview={showPreview} previewUrl={previewUrl} />
           
         ))}
